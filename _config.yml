@@ -3,7 +3,7 @@ title: 苹果核
 email: boling@tmall.com
 description: > # this means to ignore newlines until "baseurl:"
    除了苹果我们也卖别的
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/p/" # the subpath of your site, e.g. /blog/
 url: "http://pingguohe.net" # the base hostname & protocol for your site
 twitter_username: gaosboy
 github_username:  pingguohe
