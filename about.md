@@ -2,10 +2,11 @@
 layout: page
 title: About
 permalink: /about/
+author: gaosboy
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+2011年6月苹果核发布了第一篇文章，这个时候苹果核是我当时所在团队的团队博客，我带着几个非常优秀的应届生开启了口碑无线的iOS时代，页开启了**苹果核**这个专门聊苹果技术的团队博客。后来随着口碑业务的下线，团队博客也就荒废了。
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+现在我们重启**苹果核**，不同的团队，相同的技术情结。现阶段**苹果核**由我所在的**天猫无线-基础业务**团队主力维护。当然，**苹果核**将不再是一个只聊苹果技术的博客，所有无线技术都是我们关注的。
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+非常感谢你来到**苹果核**，阅读我们的文章，也非常欢迎你[向**苹果核**提交PR](https://github.com/pingguohe/pingguohe.github.io)，我们非常愿意在**苹果核**上看到你的分享。当然，我们更欢迎你[加入我们的团队](mailto:boling@tmall.com)，成为**苹果核**团队的一员！
