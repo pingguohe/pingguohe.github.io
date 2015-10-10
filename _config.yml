@@ -8,5 +8,9 @@ url: "http://pingguohe.net" # the base hostname & protocol for your site
 twitter_username: 
 github_username:  pingguohe
 
+sass:
+  sass_dir: _sass
+  style: :compressed
+
 # Build settings
 markdown: kramdown
