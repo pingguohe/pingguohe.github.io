@@ -10,3 +10,5 @@ github_username:  pingguohe
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
