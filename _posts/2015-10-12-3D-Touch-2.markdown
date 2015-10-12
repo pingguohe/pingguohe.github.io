@@ -42,8 +42,8 @@ if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
 ```
 按的越重，这个view的red就越大
 
-![图片1](/images/img-3.PNG)
-![图片2](/images/img-4.PNG)
+![图片1](/images/img-3.png)
+![图片2](/images/img-4.png)
 
 
 为了得到```maximumPossibleForce```值，我故意在这个函数中加上了
