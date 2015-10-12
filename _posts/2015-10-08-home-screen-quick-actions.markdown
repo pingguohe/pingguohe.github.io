@@ -1,13 +1,13 @@
 ---
 
 layout: post
-title: 浅谈3D Touch（1） -- 给猫客装上一个桌面快捷菜单
+title: 浅谈3D Touch（1） -- Home screen quick aciton
 author: 尛破孩-波波
 
 --- 
 
 ###1. 背景：
-随着iOS9 和 iPhone 6s的普及，苹果官方提供的3D Touch将带给我们更好玩，更便捷的操作习惯，桌面快捷菜单可谓是3D Touch功能中最实用的一个，有了它，用户不再需要进入app后做额外的操作，便能快速进入指定的页面，所以，我要让猫客也拥有这个时尚、方便的快捷菜单。
+随着iOS9 和 iPhone 6s的普及，苹果官方提供的3D Touch将带给我们更好玩，更便捷的操作习惯，桌面快捷菜单可谓是3D Touch功能中最实用的一个，有了它，用户不再需要进入app后做额外的操作，便能快速进入指定的页面。
 
 ###2. 前期工作：
 由于手头“并（wo）没（xiang）有（yao）”iPhone 6s 的设备，很多人说，那我怎么开发这个功能呢？不怕，github上早有大神写好了[模拟器的解决方案](https://github.com/DeskConnect/SBShortcutMenuSimulator)。按照这个文档上的方法依次执行，你的模拟器也能唤出快捷菜单。
@@ -31,8 +31,40 @@ UIApplicationShortcutItem 的创建有2种方式
 
 + 第一种是在info.plist里面静态添加：
 
-![图1](/images/img-1.jpeg)
-
+```
+<key>UIApplicationShortcutItems</key>
+<array>
+	<dict>
+		<key>UIApplicationShortcutItemType</key>
+		<string>3dtouch.homePage</string>
+		<key>UIApplicationShortcutItemTitle</key>
+		<string>首页</string>
+		<key>UIApplicationShortcutItemSubtitle</key>
+		<string>这是首页</string>
+		<key>UIApplicationShortcutItemIconFile</key>
+		<string>shouye.png</string>
+		<key>UIApplicationShortcutItemUserInfo</key>		<dict>
+			<key>url</key>
+			<string>index</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>UIApplicationShortcutItemType</key>
+		<string>3dtouch.guanzhupage</string>
+		<key>UIApplicationShortcutItemTitle</key>
+		<string>关注</string>
+		<key>UIApplicationShortcutItemSubtitle</key>
+		<string>这是关注</string>
+		<key>UIApplicationShortcutItemIconFile</key>
+		<string>guanzhu.png</string>
+		<key>UIApplicationShortcutItemUserInfo</key>
+		<dict>
+			<key>url</key>
+			<string>guanzhu</string>
+		</dict>
+	</dict>
+</array>
+```
 + 第二种是在程序初始化的时候用代码动态添加：
 	
 我们先看一下UIApplicationShortcutItem.h,发现它的使用非常简单，习惯完全符合官方API固有方式，而且和之前那种方式所构建的包含的信息是一一对应的，其中有3个*@interface*分别是：
@@ -40,12 +72,40 @@ UIApplicationShortcutItem 的创建有2种方式
 * UIApplicationShortcutIcon
 * UIApplicationShortcutItem
 * UIMutableApplicationShortcutItem
-	
-![图2](/images/img-2.jpeg)
 
+```
+//创建快捷item的icon 即UIApplicationShortcutItemIconFile
+UIApplicationShortcutIcon *icon1 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"money"];
+
+UIApplicationShortcutIcon *icon2 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"gouwuche"];
+
+UIApplicationShortcutIcon *icon3 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"wode"];
+    
+//创建快捷item的userinfo 即UIApplicationShortcutItemUserInfo
+NSDictionary *info1 = @{@"url":@"money"};
+NSDictionary *info2 = @{@"url":@"gouWuche"};
+NSDictionary *info3 = @{@"url":@"wode"};
+    
+//创建ShortcutItem
+UIMutableApplicationShortcutItem *item1 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"3dtouch.moneyPage" localizedTitle:@"资产" localizedSubtitle:@"这是资产" icon:icon1 userInfo:info1];
+
+UIMutableApplicationShortcutItem *item2 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"3dtouch.shopPage" localizedTitle:@"购物车" localizedSubtitle:@"这是购物车" icon:icon2 userInfo:info2];
+
+UIMutableApplicationShortcutItem *item3 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"3dtouch.mypage" localizedTitle:@"我的" localizedSubtitle:@"这是我的" icon:icon3 userInfo:info3];
+    
+//把原有的shortcutItems拿出来，把动态的放进去
+NSArray *items = @[item1, item2, item3];
+
+NSArray *existingItems = [UIApplication sharedApplication].shortcutItems;
+
+NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
+    
+//塞回去
+[UIApplication sharedApplication].shortcutItems = updatedItems;
+```
 最后我们来看一下效果：
 
-![图3](/images/img-3.jpg)
+![图3](/images/img-1.png)
 
 **看上去是不是非常和谐？其实我告诉你，我们已经踩到了坑里了**
 
@@ -69,7 +129,7 @@ NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 
 所以我们每运行一次，shortcutItems中的元素个数就会多3个，
 
-![图4](/images/img-4.jpeg)
+![图4](/images/img-2.png)
 
 那为什么展示出来没有问题呢？
 
@@ -96,13 +156,47 @@ NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 
 UIApplication又给我们一个从launchOptions中获取这个shortcutItem的key--UIApplicationLaunchOptionsShortcutItemKey，所以在这2个都进行对shortcutItem的操作后，我们这个功能算是完成了
 
-在didFinishLaunchingWithOptions中，由于猫客会有启动动画，所以这边加了3秒，具体因程序而异
-![图5](/images/img-5.jpeg)
+在didFinishLaunchingWithOptions中，由于某些客户端会有启动动画，所以这边加了3秒，具体因程序而异
+
+```
+UIApplicationShortcutItem *item = [launchOptions valueForKey:UIApplicationLaunchOptionsShortcutItemKey];
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [strongSelf actionWithShortcutItem:item];
+        }
+    });
+```
 
 在performActionForShortcutItem回调中
-![图6](/images/img-6.jpeg)
 
-最后就是统一处理actionWithShortcutItem的地方，由于我这个demo中所有的type对应的行为都是页面跳转，所以我这边没有对type做区分，甚至所以的item可以用同一个type
-![图7](/images/img-7.jpeg)
+```
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void(^)(BOOL succeeded))completionHandler
+{
+    if (shortcutItem)
+    {
+        [self actionWithShortcutItem:shortcutItem];
+    }
+    
+    if (completionHandler)
+    {
+        completionHandler(YES);
+    }
+}
+```
 
-好了，3D Touch的第一个功能就介绍到这里，本demo中的所有代码并非猫客中真正使用的代码，只作为讲解使用。
+
+最后就是统一处理actionWithShortcutItem的地方，由于我这个demo中所有的type对应的行为都一样的，所以我这边没有对type做区分，甚至所以的item可以用同一个type
+
+```
+-(void)actionWithShortcutItem:(UIApplicationShortcutItem *)item
+{
+    if (item.userInfo)
+    {
+        NSLog(@"%@",item.userInfo[@"url"]);
+    }
+}
+```
+好了，3D Touch的第一个功能就介绍到这里。
