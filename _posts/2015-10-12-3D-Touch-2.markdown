@@ -5,3 +5,178 @@ title: 浅谈3D Touch（2） -- UITouch && Peek && Pop
 author: 尛破孩-波波
 
 --- 
+
+### UITouch
+之所以先说UITouch是因为从Peek到Pop这个过程中，相信其内部用到了这个东西，我们来看一下iOS9在这个UITouch中加了哪些东西：
+
+* UIForceTouchCapability
+	* UIForceTouchCapabilityUnknown         //不清楚
+	* UIForceTouchCapabilityUnavailable     //不可用
+	* UIForceTouchCapabilityAvailable       //可用
+	
+这3个枚举值就是我们来判断设备是否开启3D Touch功能，可以在UIViewController生命周期的viewWillAppear中我们是这么判断的：
+
+```objc
+if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
+{
+	xxxxxxxx
+}
+```
+当然在生命周期内，如果用户有意修改了设备的3D Touch功能，我们还有一个地方来重新检测：
+
+```objc
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+```
+
+刚刚说了Peek和Pop和这个有关，对的，就是这个类中的```force ```属性以及他的最大值```maximumPossibleForce```，我们在UIView上做一个简单的实验
+
+```objc
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    NSLog(@"%f",touch.force);
+    self.backgroundColor = [UIColor colorWithRed:(touch.force / touch.maximumPossibleForce )green:0 blue:1 alpha:1];
+    
+}
+```
+按的越重，这个view的red就越大
+
+![图片1](/images/img-3.PNG)
+![图片1](/images/img-4.PNG)
+
+
+为了得到```maximumPossibleForce```值，我故意在这个函数中加上了
+
+```objc
+if (touch.force == touch.maximumPossibleForce)
+{
+    NSLog(@"%f",touch.force);
+}
+```
+输出发现当3D touch开的时候这个值为20/3,所以得到结论```force```是从0～20/3
+从Peek到Pop也正是根据这个值大于某个指定的值时触发
+
+### Peek & Pop
+刚刚说了Peek和Pop的触发和UITouch的```force```有关，在切入正题之前我们还要将触发这2个事件的另一个东西:
+
+#### previewActionItems
+我们创建一个PeekViewController，在这个利用到了UIPreviewAction 和 UIPreviewActionGroup 2个iOS9新加的类型和他们的初始化方法我们重写
+
+```objc
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems
+```
+从而来定义previewActionItems，这里没什么难度直接上代码
+
+```objc
+- (NSArray<id<UIPreviewActionItem>> *)previewActionItems
+{
+    
+    // 生成UIPreviewAction
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"Action 1" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"Action 1 selected");
+    }];
+    
+    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"Action 2" style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"Action 2 selected");
+    }];
+    
+    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@"Action 3" style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"Action 3 selected");
+    }];
+    
+    UIPreviewAction *tap1 = [UIPreviewAction actionWithTitle:@"tap 1" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"tap 1 selected");
+    }];
+    
+    UIPreviewAction *tap2 = [UIPreviewAction actionWithTitle:@"tap 2" style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"tap 2 selected");
+    }];
+    
+    UIPreviewAction *tap3 = [UIPreviewAction actionWithTitle:@"tap 3" style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"tap 3 selected");
+    }];
+    
+    // 赛到UIPreviewActionGroup中
+    NSArray *actions = @[action1, action2, action3];
+    NSArray *taps = @[tap1, tap2, tap3];
+    UIPreviewActionGroup *group1 = [UIPreviewActionGroup actionGroupWithTitle:@"Action Group" style:UIPreviewActionStyleDefault actions:actions];
+    UIPreviewActionGroup *group2 = [UIPreviewActionGroup actionGroupWithTitle:@"Action Group" style:UIPreviewActionStyleDefault actions:taps];
+    NSArray *group = @[group1,group2];
+    
+    return group;
+}
+```
+我们发现他是一个二维结构，所以能展示的东西还是非常多的。
+
+好了准备工作到此结束，我们切入正题
+在ViewController中，创建一个label作为触发的view
+
+```objc
+_label = [[UILabel alloc] initWithFrame:CGRectMake(10, 300, self.view.frame.size.width - 20, 100)];
+_label.userInteractionEnabled = YES;
+_label.textAlignment = NSTextAlignmentCenter;
+_label.backgroundColor = [UIColor yellowColor];
+_label.font = [UIFont boldSystemFontOfSize:20];
+_label.text = @"Peek && Pop";
+[self.view addSubview:_label];
+```
+然后检测是否可以使用3DTouch，如果可以就注册：
+
+```objc
+- (void)check3DTouch
+{
+    // 如果开启了3D touch
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
+    {
+        [self registerForPreviewingWithDelegate:(id)self sourceView:_label];
+        
+    }
+}
+```
+
+最后我们来写Peek和Pop的代理方法
+
++ peek：
+
+```objc
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location
+{
+    //防止重复加入
+    if ([self.presentedViewController isKindOfClass:[PeekViewController class]])
+    {
+        return nil;
+    }
+    else
+    {
+        PeekViewController *peekViewController = [[PeekViewController alloc] init];
+        return peekViewController;
+    }
+}
+```
+这个代理在按的过程中会进来多次，但是我们并不需要多个peek对象，所以如果触发的self.presentedViewController和我们想要的peekViewController已经是同一个了，那就return nil，我们按```label```在出现peekViewController的时候向上移动我们能看到刚刚创建的previewActionItems的2个group
+
+![图片3](/images/img-5.png)
+
+点开一个就能看到我们没个group的items
+
+![图片3](/images/img-6.png)
+
+点击就会触发我们刚刚在block中定义的事件
+
++ Pop：
+在Peek的基础上不要向上移动，而是按得更重一些，个人感觉已经到了```maximumPossibleForce```这个时候触发代理：
+
+```objc
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit
+{
+    PopViewController *popViewController = [[PopViewController alloc] init];
+    [self showViewController:popViewController sender:self];
+}
+```
+这时候我们看到了PopViewController
+
+![图片3](/images/img-7.png)
+
+当然我们在PopViewController还需要给他加个dismiss的方法，让他可以回去
+
+好了，官方说的所有3D Touch的功能都介绍好了，这是我的[Demo](https://github.com/wuhanbo555/3D-Touch-Demo.git)
