@@ -31,7 +31,7 @@ UIApplicationShortcutItem 的创建有2种方式
 
 + 第一种是在info.plist里面静态添加：
 
-```
+```objc
 <key>UIApplicationShortcutItems</key>
 <array>
 	<dict>
@@ -74,7 +74,7 @@ UIApplicationShortcutItem 的创建有2种方式
 * UIApplicationShortcutItem
 * UIMutableApplicationShortcutItem
 
-```
+```objc
 //创建快捷item的icon 即UIApplicationShortcutItemIconFile
 UIApplicationShortcutIcon *icon1 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"money"];
 
@@ -112,19 +112,19 @@ NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 
 我在运行中发现：
 
-```
+```objc
 NSArray *existingItems = [UIApplication sharedApplication].shortcutItems;
 ```
 
 所获得的existingItems并不是我们之前设置在info.plist里面的，而是上一次
 
-```
+```objc
 [UIApplication sharedApplication].shortcutItems = updatedItems;
 ```
 
 赋值给他的，又因为我自作聪明的做了一次
 
-```
+```objc
 NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 ```
 
@@ -136,7 +136,7 @@ NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 
 仔细看刚刚发的那张效果图，我擦，只有4个，对了，这个就是表象上不出错的原因，在API上并没有写shortcutItems有任何个数限制，也没有写快捷窗口的个数，但是实际上，最多只能显示4个，而且shortcutItems这个里面的对象恐怕是早已被系统默默的存到了某个plist里了，每当程序启动时，会向系统要app的Bundle Identifier对应的shortcutItems，并非我们事先想要的info.plist中的items，当然以上只是我从现象做出的合理猜测，我们并不需要关心info.plist中的那些静态item，只需要动态创建的item直接打包赋值过去
 
-```
+```objc
 [UIApplication sharedApplication].shortcutItems = @[item1, item2, item3];
 ```
 
@@ -145,13 +145,13 @@ NSArray *updatedItems = [existingItems arrayByAddingObjectsFromArray:items];
 #### ②.Item点击回调
 当app在后台的时候UIApplication提供了一个回调方法
 
-```
+```objc
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void(^)(BOOL succeeded))completionHandler NS_AVAILABLE_IOS(9_0);
 ```
 
 我们依据这个回调中的shortcutItem的type和userinfo来做出不同的事件处理,而最后的completionHandler在API的说明中我们看到当应用并非在后台，而是直接重新开进程的时候，直接返回No，那么这个时候，我们的回调会放在
 
-```
+```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 ```
 
@@ -159,7 +159,7 @@ UIApplication又给我们一个从launchOptions中获取这个shortcutItem的key
 
 在didFinishLaunchingWithOptions中，由于某些客户端会有启动动画，所以这边加了3秒，具体因程序而异
 
-```
+```objc
 UIApplicationShortcutItem *item = [launchOptions valueForKey:UIApplicationLaunchOptionsShortcutItemKey];
 __weak typeof(self) weakSelf = self;
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -173,7 +173,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), di
 
 在performActionForShortcutItem回调中
 
-```
+```objc
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void(^)(BOOL succeeded))completionHandler
 {
     if (shortcutItem)
@@ -191,7 +191,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), di
 
 最后就是统一处理actionWithShortcutItem的地方，由于我这个demo中所有的type对应的行为都一样的，所以我这边没有对type做区分，甚至所以的item可以用同一个type
 
-```
+```objc
 -(void)actionWithShortcutItem:(UIApplicationShortcutItem *)item
 {
     if (item.userInfo)
