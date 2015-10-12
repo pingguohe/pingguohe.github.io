@@ -7,6 +7,7 @@ author: 尛破孩-波波
 --- 
 
 ### UITouch
+
 之所以先说UITouch是因为从Peek到Pop这个过程中，相信其内部用到了这个东西，我们来看一下iOS9在这个UITouch中加了哪些东西：
 
 * UIForceTouchCapability
