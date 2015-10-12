@@ -200,4 +200,4 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), di
     }
 }
 ```
-好了，3D Touch的第一个功能就介绍到这里。
+好了，3D Touch的第一个功能就介绍到这里 [Demo](https://github.com/wuhanbo555/3D-Touch-Demo.git)。
