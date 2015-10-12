@@ -11,9 +11,9 @@ author: 尛破孩-波波
 之所以先说UITouch是因为从Peek到Pop这个过程中，相信其内部用到了这个东西，我们来看一下iOS9在这个UITouch中加了哪些东西：
 
 * UIForceTouchCapability
-	* UIForceTouchCapabilityUnknown         //不清楚
-	* UIForceTouchCapabilityUnavailable     //不可用
-	* UIForceTouchCapabilityAvailable       //可用
+	* UIForceTouchCapabilityUnknown         //3D Touch检测失败
+	* UIForceTouchCapabilityUnavailable     //3D Touch可用
+	* UIForceTouchCapabilityAvailable       //3D Touch可用
 	
 这3个枚举值就是我们来判断设备是否开启3D Touch功能，可以在UIViewController生命周期的viewWillAppear中我们是这么判断的：
 
@@ -154,6 +154,7 @@ _label.text = @"Peek && Pop";
     }
 }
 ```
+
 这个代理在按的过程中会进来多次，但是我们并不需要多个peek对象，所以如果触发的self.presentedViewController和我们想要的peekViewController已经是同一个了，那就return nil，我们按```label```在出现peekViewController的时候向上移动我们能看到刚刚创建的previewActionItems的2个group
 
 ![图片3](/images/img-5.png)
