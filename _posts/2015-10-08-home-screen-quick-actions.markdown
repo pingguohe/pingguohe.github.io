@@ -6,13 +6,13 @@ author: 尛破孩-波波
 
 --- 
 
-###1. 背景：
+### 1. 背景：
 随着iOS9 和 iPhone 6s的普及，苹果官方提供的3D Touch将带给我们更好玩，更便捷的操作习惯，桌面快捷菜单可谓是3D Touch功能中最实用的一个，有了它，用户不再需要进入app后做额外的操作，便能快速进入指定的页面。
 
-###2. 前期工作：
+### 2. 前期工作：
 由于手头“并（wo）没（xiang）有（yao）”iPhone 6s 的设备，很多人说，那我怎么开发这个功能呢？不怕，github上早有大神写好了[模拟器的解决方案](https://github.com/DeskConnect/SBShortcutMenuSimulator)。按照这个文档上的方法依次执行，你的模拟器也能唤出快捷菜单。
 
-###3. 正式接入
+### 3. 正式接入
 
 #### ①.创建UIApplicationShortcutItem
 我们先来看一下每个UIApplicationShortcutItem中能够包含哪些信息
@@ -43,7 +43,8 @@ UIApplicationShortcutItem 的创建有2种方式
 		<string>这是首页</string>
 		<key>UIApplicationShortcutItemIconFile</key>
 		<string>shouye.png</string>
-		<key>UIApplicationShortcutItemUserInfo</key>		<dict>
+		<key>UIApplicationShortcutItemUserInfo</key>
+		<dict>
 			<key>url</key>
 			<string>index</string>
 		</dict>
@@ -160,14 +161,14 @@ UIApplication又给我们一个从launchOptions中获取这个shortcutItem的key
 
 ```
 UIApplicationShortcutItem *item = [launchOptions valueForKey:UIApplicationLaunchOptionsShortcutItemKey];
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf)
-        {
-            [strongSelf actionWithShortcutItem:item];
-        }
-    });
+__weak typeof(self) weakSelf = self;
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	__strong typeof(weakSelf) strongSelf = weakSelf;
+	if (strongSelf)
+   	{
+   		[strongSelf actionWithShortcutItem:item];
+   	}
+});
 ```
 
 在performActionForShortcutItem回调中
