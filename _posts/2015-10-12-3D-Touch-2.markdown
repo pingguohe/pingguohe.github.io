@@ -43,7 +43,7 @@ if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
 按的越重，这个view的red就越大
 
 ![图片1](/images/img-3.PNG)
-![图片1](/images/img-4.PNG)
+![图片2](/images/img-4.PNG)
 
 
 为了得到```maximumPossibleForce```值，我故意在这个函数中加上了
@@ -161,7 +161,7 @@ _label.text = @"Peek && Pop";
 
 点开一个就能看到我们没个group的items
 
-![图片3](/images/img-6.png)
+![图片4](/images/img-6.png)
 
 点击就会触发我们刚刚在block中定义的事件
 
@@ -177,7 +177,7 @@ _label.text = @"Peek && Pop";
 ```
 这时候我们看到了PopViewController
 
-![图片3](/images/img-7.png)
+![图片5](/images/img-7.png)
 
 当然我们在PopViewController还需要给他加个dismiss的方法，让他可以回去
 
