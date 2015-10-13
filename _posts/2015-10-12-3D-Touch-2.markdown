@@ -12,7 +12,7 @@ author: 尛破孩-波波
 
 * UIForceTouchCapability
 	* UIForceTouchCapabilityUnknown         //3D Touch检测失败
-	* UIForceTouchCapabilityUnavailable     //3D Touch可用
+	* UIForceTouchCapabilityUnavailable     //3D Touch不可用
 	* UIForceTouchCapabilityAvailable       //3D Touch可用
 	
 这3个枚举值就是我们来判断设备是否开启3D Touch功能，可以在UIViewController生命周期的viewWillAppear中我们是这么判断的：
@@ -97,7 +97,7 @@ if (touch.force == touch.maximumPossibleForce)
         NSLog(@"tap 3 selected");
     }];
     
-    // 赛到UIPreviewActionGroup中
+    // 塞到UIPreviewActionGroup中
     NSArray *actions = @[action1, action2, action3];
     NSArray *taps = @[tap1, tap2, tap3];
     UIPreviewActionGroup *group1 = [UIPreviewActionGroup actionGroupWithTitle:@"Action Group" style:UIPreviewActionStyleDefault actions:actions];
