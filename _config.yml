@@ -13,6 +13,10 @@ sass:
   style: compressed
 
 # Build settings
-markdown: kramdown
-kramdown:
-    input: GFM
+highlighter: pygments
+markdown: redcarpet
+redcarpet:
+    extensions: ["tables"]
+#markdown: kramdown
+#kramdown:
+#    input: GFM

@@ -31,7 +31,7 @@ UIApplicationShortcutItem 的创建有2种方式
 
 + 第一种是在info.plist里面静态添加：
 
-```objc
+```xml
 <key>UIApplicationShortcutItems</key>
 <array>
 	<dict>
