@@ -10,9 +10,9 @@ github_username:  pingguohe
 
 sass:
   sass_dir: _sass
-  style: :compressed
+  style: compressed
 
 # Build settings
 markdown: kramdown
 kramdown:
-  input: GFM
+    input: GFM
