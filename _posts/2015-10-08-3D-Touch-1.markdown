@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: 浅谈3D Touch（1） -- Home screen quick aciton
+title: 浅谈3D Touch（1） -- Home screen quick action
 author: 尛破孩-波波
 
 --- 
