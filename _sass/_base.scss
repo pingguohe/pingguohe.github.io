@@ -125,8 +125,15 @@ blockquote {
 /**
  * Code formatting
  */
-pre,
-code {
+pre, code {
+    font-size: 15px;
+    border: 1px solid $grey-color-light;
+    border-radius: 3px;
+    background-color: #3a3a3a;
+    color: #EEEEEE;
+}
+
+pre, code {
     font-size: 15px;
     border: 1px solid $grey-color-light;
     border-radius: 3px;
