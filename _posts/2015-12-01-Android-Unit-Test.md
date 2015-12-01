@@ -41,7 +41,7 @@ AndroidTestCase使用JUnit框架进行单元测试，首先需要在gradle中进
 			assertEquals(true, TMConfigProcessUtils.isMainProcess(getContext()));
 		}
 	}
-测试代码继承自AndroidTestCase，可以在setUp()方法中初始化一些变量。如果直接使用JUnit是无法获取context的，也就无法对android的代码进行测试，集成AndroidTestCase之后可以直接使用getContext()方法获取context。然后需要将Test Artifact切换成Android Instrumentation test。直接运行测试代码，结果如下。
+测试代码继承自AndroidTestCase，可以在setUp()方法中初始化一些变量。如果直接使用JUnit是无法获取context的，也就无法对android的代码进行测试，继承AndroidTestCase之后可以直接使用getContext()方法获取context。然后需要将Test Artifact切换成Android Instrumentation test。直接运行测试代码，结果如下。
 ![ut1](/images/2015/12/image_1.png)
 会直接显示测试代码运行的结果，也可以导出到html中进行查看。
 
