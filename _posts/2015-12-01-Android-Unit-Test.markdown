@@ -86,7 +86,8 @@ Robolectric不支持API Level 22，所以这里必须加上sdk=21或其它支持
 这里可以直接查看每个类运行的情况。
 
 ###对比
-对android单元测试接触的时间比较短，简单做下对比。  
+对android单元测试接触的时间比较短，简单做下对比，可以根据具体需要选择。 
+
 + AndroidTestCase需要实际的android环境，需要真机或者模拟器，一个字慢！Robolectric不需要android环境，运行起来很快。
 + Robolectric虽然可以用`RuntimeEnvironment.application`获取application，但是从实际的运行结果来看这里应用并没有启动，所以就无法获取当前的进程名，在AndroidTestCase中的那个例子在Robolectric中是跑不过，在测试一些与运行时有关的方法可能会有问题。而继承自AndroidTestCase的测试代码需要在实际的系统环境中运行，没有这个问题。
 
