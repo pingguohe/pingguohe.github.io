@@ -1,3 +1,11 @@
+---
+
+layout: post
+title: window scroll 事件处理
+author: 李斌
+
+--- 
+
 #`window`对象`scroll`事件处理之 **_throttle_** 和 **_debounce_** 
 [概念请点这里](http://www.cnblogs.com/fsjohnhuang/p/4147810.html)
 
