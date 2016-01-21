@@ -14,7 +14,7 @@ author: 李斌
 
 代码如下：
  
-```
+```js
 var detect = S.throttle(self.detect, BUFF, self);
 Event.on(window, 'scroll', detect);
         
@@ -30,7 +30,7 @@ Event.on(window, 'scroll', detect);
 
  代码如下：
 
-```
+```js
 window.addEventListener('scroll', function () {
       if (typeof timer === 'number') {
           clearTimeout(timer);
