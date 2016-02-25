@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: window scroll 事件处理
+title: window scroll 事件处理之 “throttle” 和 “debounce”
 author: 李斌
 
 --- 
