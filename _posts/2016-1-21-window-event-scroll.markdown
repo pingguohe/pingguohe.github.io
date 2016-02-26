@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: window scroll 事件处理
+title: window scroll 事件处理之 “throttle” 和 “debounce”
 author: 李斌
 
 --- 
@@ -15,8 +15,20 @@ author: 李斌
 代码如下：
  
 ```js
-var detect = S.throttle(self.detect, BUFF, self);
-Event.on(window, 'scroll', detect);
+var detect = throttle(function(){ 
+	//添加业务逻辑
+}, 200);
+
+window.addEventListener('scroll', detect, false);
+
+function throttle(action, delay){
+	 var self = this;
+	 var curr = +new Date();
+	 if (curr - self.last > delay){
+	   action.apply(this, arguments);
+	   self.last = curr ;
+	 }
+}
         
 ```
 ##  **问题发现**
@@ -31,15 +43,14 @@ Event.on(window, 'scroll', detect);
  代码如下：
 
 ```js
+var timer = null;
 window.addEventListener('scroll', function () {
       if (typeof timer === 'number') {
           clearTimeout(timer);
       }
       timer = setTimeout(function () {
-          //添加onscroll事件处理
-          self.detect();
-          //console.log('cbArr:::',cbArr);
-      }, BUFF);
+          //添加业务逻辑
+      },200);
 }, false);
     
 
