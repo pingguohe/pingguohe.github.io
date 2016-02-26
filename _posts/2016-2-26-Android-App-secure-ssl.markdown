@@ -244,16 +244,6 @@ try {
                       String authType)
                       throws CertificateException {
                   for (X509Certificate cert : chain) {
-                      Log.i("Longer", "Server Certificate Details:");
-                      Log.i("Longer", "---------------------------");
-                      Log.i("Longer", "IssuerDN: " + cert.getIssuerDN().toString());
-                      Log.i("Longer", "SubjectDN: " + cert.getSubjectDN().toString());
-                      Log.i("Longer", "Serial Number: " + cert.getSerialNumber());
-                      Log.i("Longer", "Version: " + cert.getVersion());
-                      Log.i("Longer", "Not before: " + cert.getNotBefore().toString());
-                      Log.i("Longer", "Not after: " + cert.getNotAfter().toString());
-                      Log.i("Longer", "local ca publicKey: " + ((X509Certificate) ca).getPublicKey().toString());
-                      Log.i("Longer", "---------------------------");
 
                       // Make sure that it hasn't expired.
                       cert.checkValidity();
