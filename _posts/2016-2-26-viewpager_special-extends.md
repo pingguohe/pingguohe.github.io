@@ -6,7 +6,6 @@ author: 黄宇
 
 ---
 
-# ViewPager的两种特殊扩展及其他
 ## 竖向滑动
 ### 1.监听ViewPager的touch事件，交换touch的x和y坐标
 
