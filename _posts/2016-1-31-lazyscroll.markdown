@@ -26,7 +26,7 @@ LazyScrollView的使用和TableView很像，不过多了一个需要实现的方
 
 类似TableView的用法，我们需要使用方实现LazyScrollViewDatasource这个Delegate
 
-```objectivec
+```objc
 @protocol TMMuiLazyScrollViewDataSource <NSObject>
 @required
 //ScrollView一共展示多少个item
@@ -44,7 +44,7 @@ LazyScrollView的核心是在初始状态就得知所有View应该显示的位�
 
 第二个方法需要按照Index返回`TMMuiRectModel` ，它会携带对应index的View 相对LazyScrollView的绝对坐标。TMMuiRectModel是这么个东西：
 
-```objectivec
+```objc
 @interface TMMuiRectModel:NSObject
 //转换后的绝对值rect
 @property (nonatomic,assign) CGRect absRect;
@@ -58,7 +58,7 @@ LazyScrollView的核心是在初始状态就得知所有View应该显示的位�
 
 第三个方法，返回View。首先，我们在UIView之外加了一个Category：
 
-```objectivec
+```objc
 @interface UIView(TMMui)
 
 //索引过的标识，在LazyScrollView范围内唯一

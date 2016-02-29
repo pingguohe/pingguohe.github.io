@@ -15,10 +15,8 @@ sass:
   style: compressed
 
 # Build settings
-highlighter: pygments
-markdown: redcarpet
-redcarpet:
-    extensions: ["tables"]
-#markdown: kramdown
-#kramdown:
-#    input: GFM
+#highlighter: pygments
+markdown: kramdown
+highlighter: rouge
+kramdown:
+    input: GFM

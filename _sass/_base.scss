@@ -217,7 +217,7 @@ pre {
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    border-color: grey;
+    border-color: lightgrey;
     border-style: double;
     border-width: 1px;
     font-size: 14px;
@@ -226,14 +226,16 @@ table {
 td, th {
     display: table-cell;
     vertical-align: inherit;
-    border-color: grey;
+    border-color: lightgrey;
     border-style: solid;
     border-width: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 thead {
     border-bottom-style: solid;
-    border-bottom-width: 2px;
+    border-bottom-width: 1px;
 }
 
 tr:nth-of-type(even) {
