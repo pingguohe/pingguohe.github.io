@@ -3,6 +3,7 @@
   <div class="wrapper">
 
     <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="sub-site-title" href="/joinus/">加入&nbsp;<span class="tmall">天猫无线</span>&nbsp;，做一个快速成长的工程师！</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -16,7 +17,9 @@
       <div class="trigger">
         {% for page in site.pages %}
           {% if page.title %}
+          {% if page.showonnav %}
           <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+          {% endif %}
           {% endif %}
         {% endfor %}
       </div>
