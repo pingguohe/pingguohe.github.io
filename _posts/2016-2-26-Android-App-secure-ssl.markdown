@@ -304,7 +304,9 @@ HostnameVerifier hnv = new HostnameVerifier() {
 SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
 sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
 ```
+
 ## 参考资料
+
 * [窃听风暴： Android平台https嗅探劫持漏洞](http://security.tencent.com/index.php/blog/msg/41)
 * [Android证书信任问题与大表哥](http://drops.wooyun.org/tips/3296)
 * [Android HTTPS中间人劫持漏洞浅析](http://jaq.alibaba.com/blog.htm?id=60)
