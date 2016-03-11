@@ -193,7 +193,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{NSLog(@"down");});
 在例子中，我把3个log分别放在并发队列中，通过把这个并发队列任务统一加入group中，group每次runloop的时候都会调用一个方法```dispatch_group_wait(group, DISPATCH_TIME_NOW)```，用来检查group中的任务是否已经完成，如果已经完成了，那么会执行```dispatch_group_notify```的block，输出'down'看一下运行结果：
 
 ```
-2016-03-07 14:21:58.647 GCD[9424:156388] 3
+2016-03-07 14:21:58.647 GCD[9424:156388] 2
 2016-03-07 14:21:58.647 GCD[9424:156382] 0
 2016-03-07 14:21:58.647 GCD[9424:156385] 1
 2016-03-07 14:21:58.650 GCD[9424:156324] down
