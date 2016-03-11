@@ -354,5 +354,4 @@ return instance;
 
 参考文献：《Objective-C高级编程 iOS与OS X多线程》
 
-了解更多无线技术，访问[苹果核](http://pingguohe.net)
 
