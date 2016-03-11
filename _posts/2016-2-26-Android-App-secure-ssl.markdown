@@ -9,7 +9,7 @@ author: Longerian
 ## 漏洞描述
 对于数字证书相关概念、Android 里 https 通信代码就不再复述了，直接讲问题。缺少相应的安全校验很容易导致中间人攻击，而漏洞的形式主要有以下3种：
 
-+ 自定义```X509TrustManager```。在使用```HttpsURLConnection```发起 HTTPS 请求的时候，提供了一个自定义的```X509TrustManager```，未实现安全校验逻辑，下面片段就是当时新浪微博 sdk 内部的代码片段。如果不提供自定义的```X509TrustManager```，代码运行起来可能会报异常（原因下文解释），初学者就很容易在不明真相的情况下提供了一个自定义的```X509TrustManager```，却忘记正确地实现相应的方法。本文重点介绍这种场景的处理方式。
++ 自定义```X509TrustManager```。在使用```HttpsURLConnection```发起 HTTPS 请求的时候，提供了一个自定义的```X509TrustManager```，未实现安全校验逻辑，下面片段就是常见的容易犯错的代码片段。如果不提供自定义的```X509TrustManager```，代码运行起来可能会报异常（原因下文解释），初学者就很容易在不明真相的情况下提供了一个自定义的```X509TrustManager```，却忘记正确地实现相应的方法。本文重点介绍这种场景的处理方式。
 
 ```java
 TrustManager tm = new X509TrustManager() {
