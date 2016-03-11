@@ -6,16 +6,6 @@ author: Longerian
 
 ---
 
-## 起因
-前段时间，同事拿着一个代码安全扫描出来的 bug 过来咨询，我一看原来是个 https 通信时数字证书校验的漏洞，一想就明白了大概；其实这种问题早两年就有大规模的暴露，各大厂商App 也纷纷中招，想不到过了这么久天猫客户端里还留有这种坑；然后仔细研究了漏洞所在的代码片段，原来所属的是新浪微博分享 sdk 内部的，因为这个 sdk 是源码引用的，一直没有更新，年久失修，所以也就被扫描出来了。因此给出的解决方案是：
-
-1. 先获取最新的 sdk，看其内部是否已解决，已解决的话升级 sdk 版本即可；
-2. 第1步行不通，那就自己写校验逻辑，猫客全局通信基本已经使用 https 通信，参考着再写一遍校验逻辑也不是问题；
-
-后来查了一下网上信息，早在2014年10月份，[乌云](http://www.wooyun.org/bugs/wooyun-2014-079358)平台里就已经暴露过天猫这个漏洞，想必当时一定是忙于双十一忽略了这个问题。
-
-虽然这个问题通过升级 sdk 解决了，但是这个问题纯粹是由于开发者本身疏忽造成的；特别是对于初级开发人员来说，可能为了解决异常，屏蔽了校验逻辑；所以我还是抽空再 review 了一下这个漏洞，整理相关信息。
-
 ## 漏洞描述
 对于数字证书相关概念、Android 里 https 通信代码就不再复述了，直接讲问题。缺少相应的安全校验很容易导致中间人攻击，而漏洞的形式主要有以下3种：
 
@@ -314,7 +304,9 @@ HostnameVerifier hnv = new HostnameVerifier() {
 SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
 sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
 ```
+
 ## 参考资料
+
 * [窃听风暴： Android平台https嗅探劫持漏洞](http://security.tencent.com/index.php/blog/msg/41)
 * [Android证书信任问题与大表哥](http://drops.wooyun.org/tips/3296)
 * [Android HTTPS中间人劫持漏洞浅析](http://jaq.alibaba.com/blog.htm?id=60)
