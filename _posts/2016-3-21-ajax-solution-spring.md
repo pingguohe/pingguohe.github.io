@@ -12,16 +12,16 @@ author: ljinshuan
 
 ```java
 @RequestMapping(method = RequestMethod.POST, value = "/update.json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Contacter update(@RequestBody Contacter contacterRO) {
+public @ResponseBody Contacter update(@RequestBody Contacter contacterRO) {
 
-		logger.debug("get update request {}", contacterRO.toString());
-		if (contacterRO.getUserId() == 123) {
+	logger.debug("get update request {}", contacterRO.toString());
+	if (contacterRO.getUserId() == 123) {
 
-			contacterRO.setUserName("adminUpdate-wangdachui");
-		}
-
-		return contacterRO;
+		contacterRO.setUserName("adminUpdate-wangdachui");
 	}
+
+	return contacterRO;
+}
 ```
 客户端通过代码发起http请求来调用。接着，该同学又提出：希望通过浏览器使用js调用，于是便有跨域问题。
 
@@ -55,9 +55,10 @@ author: ljinshuan
 
 输出为:
 
-```
+```js
 Object {userId: 123, userName: "adminUpdate-wangdachui"}
 ```
+
 + 但是在其他域名下访问则出错:
 
 ![image](http://aligitlab.oss-cn-hangzhou-zmf.aliyuncs.com/uploads/tmallconfigcenter/minsk-report-wiki/1e8374d451f7e0c10416b2a46fc5584c/image.png)
