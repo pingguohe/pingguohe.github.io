@@ -139,7 +139,6 @@ Rewrite引擎的原理非常简单，模拟Web容器（Apache/Nginx等）的Rewr
 | 模式串 | 转换串 | 标记位 |
 |----|----|----|
 | ^(?:https?:)?\/\/detail(?:\.m)?\.tmall\.com\/?item.htm\?(.*) | tmall://page.tm/itemDetail?$1 | l |
-<br /> 
 
 在这条规则的保护下，PC Web和Mobile Web下的商品详情URL在天猫App中都会被拦截到Native商品详情页面，可以带来最好的用户体验。也就是说，在日常的运营工作中，不需要关注一个商品在某个平台内部需要以什么样的URL来投放，只需要投放一个主要的URL格式。这个URL在天猫App内部会被Rewrite引擎重写为Native界面声明的URL，进行展示。
 
