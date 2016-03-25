@@ -1,3 +1,4 @@
 _site
 .sass-cache
-.Ulysses-Group.plist
+.Ulysses-*
+*.swp
