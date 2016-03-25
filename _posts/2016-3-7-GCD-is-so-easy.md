@@ -16,22 +16,22 @@ author: 尛破孩-波波
 创建一个串行队列：
 
 ```objc
-dispatch_queue_t serialDiapatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_SERIAL); 
+dispatch_queue_t serialDispatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_SERIAL); 
 ```
 
-第一个参数为队列名，第二个参数为队列类型，当然，第二个参数人如果写NULL，创建出来的也是一个串行队列。然后我们在异步线程来执行这个队列：
+第一个参数为队列名，第二个参数为队列类型，当然，第二个参数如果写NULL，创建出来的也是一个串行队列。然后我们在异步线程来执行这个队列：
 
 ```objc
-dispatch_async(serialDiapatchQueue, ^{  
+dispatch_async(serialDispatchQueue, ^{  
     NSLog(@"1");  
 });  
     
-dispatch_async(serialDiapatchQueue, ^{  
+dispatch_async(serialDispatchQueue, ^{  
     sleep(2);  
     NSLog(@"2");  
 });  
     
-dispatch_async(serialDiapatchQueue, ^{  
+dispatch_async(serialDispatchQueue, ^{  
     sleep(1);  
     NSLog(@"3");  
 });  
@@ -54,7 +54,7 @@ dispatch_async(serialDiapatchQueue, ^{
 创建一个并发队列：
 
 ```objc
-dispatch_queue_t concurrentDiapatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
+dispatch_queue_t concurrentDispatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
 ```
 
 比较2个队列的创建，我们发现只有第二个参数从```DISPATCH_QUEUE_SERIAL```变成了对应的```DISPATCH_QUEUE_CONCURRENT```，其他完全一样。
@@ -62,14 +62,14 @@ dispatch_queue_t concurrentDiapatchQueue=dispatch_queue_create("com.test.queue",
 用同一段代码，换一种队列我们来比较一下效果：
 
 ```objc
-dispatch_async(concurrentDiapatchQueue, ^{
+dispatch_async(concurrentDispatchQueue, ^{
     NSLog(@"1");
 });
-dispatch_async(concurrentDiapatchQueue, ^{
+dispatch_async(concurrentDispatchQueue, ^{
     sleep(2);
     NSLog(@"2");
 });
-dispatch_async(concurrentDiapatchQueue, ^{
+dispatch_async(concurrentDispatchQueue, ^{
     sleep(1);
     NSLog(@"3");
 });
@@ -142,10 +142,10 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 刚刚我们说了系统的Global Queue是可以指定优先级的，那我们如何给自己创建的队列执行优先级呢？这里我们就可以用到```dispatch_set_target_queue```这个方法：
 
 ```objc
-dispatch_queue_t serialDiapatchQueue=dispatch_queue_create("com.test.queue", NULL);
+dispatch_queue_t serialDispatchQueue=dispatch_queue_create("com.test.queue", NULL);
 dispatch_queue_t dispatchgetglobalqueue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
-dispatch_set_target_queue(serialDiapatchQueue, dispatchgetglobalqueue);
-dispatch_async(serialDiapatchQueue, ^{
+dispatch_set_target_queue(serialDispatchQueue, dispatchgetglobalqueue);
+dispatch_async(serialDispatchQueue, ^{
     NSLog(@"我优先级低，先让让");
 });
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -204,16 +204,16 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{NSLog(@"down");});
 此方法的作用是在并发队列中，完成在它之前提交到队列中的任务后打断，单独执行其block，并在执行完成之后才能继续执行在他之后提交到队列中的任务：
 
 ```objc
-dispatch_queue_t concurrentDiapatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"0");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"1");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"2");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"3");});
-dispatch_barrier_async(concurrentDiapatchQueue, ^{sleep(1); NSLog(@"4");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"5");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"6");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"7");});
-dispatch_async(concurrentDiapatchQueue, ^{NSLog(@"8");});
+dispatch_queue_t concurrentDispatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"0");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"1");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"2");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"3");});
+dispatch_barrier_async(concurrentDispatchQueue, ^{sleep(1); NSLog(@"4");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"5");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"6");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"7");});
+dispatch_async(concurrentDispatchQueue, ^{NSLog(@"8");});
 ```
 
 输出的结果为：
@@ -298,18 +298,18 @@ NSLog(@"阻塞");
 队列挂起和恢复，这个没什么好说的，直接上代码：
 
 ```objc
-dispatch_queue_t concurrentDiapatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
-dispatch_async(concurrentDiapatchQueue, ^{
+dispatch_queue_t concurrentDispatchQueue=dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_CONCURRENT);
+dispatch_async(concurrentDispatchQueue, ^{serialDispatchQueue
     for (int i=0; i<100; i++)
     {
         NSLog(@"%i",i);
         if (i==50)
         {
             NSLog(@"-----------------------------------");
-            dispatch_suspend(concurrentDiapatchQueue);
+            dispatch_suspend(concurrentDispatchQueue);
             sleep(3);
             dispatch_async(dispatch_get_main_queue(), ^{
-                dispatch_resume(concurrentDiapatchQueue);
+                dispatch_resume(concurrentDispatchQueue);
             });
         }
     }
