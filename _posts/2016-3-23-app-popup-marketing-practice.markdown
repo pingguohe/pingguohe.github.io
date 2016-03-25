@@ -16,13 +16,66 @@ author: Longerian
 * 弹窗本身很难与原有页面通信
 * 可能会入侵原有页面的代码
 	
-很多时候，强制弹窗，影响用户交互的行为是令人反感的；入侵弹窗的页面的代码实现方案也是难以跟上发版节奏和运营需求的。我们采用的是在每个```Activity```的根节点里通过```addContentView()```的方式增加一层```WebView```，覆盖在原有页面之上，并且拦截、控制拦截触摸事件，可以将事件传递给原有页面，不影响原有页面的点击、滑动操作，从而达到弹窗与页面相互融合的境界。为了达到动态化、无业务代码侵入，将整体实现方案打包在一个模块内，配合我们的[配置中心](http://pingguohe.net/2016/03/18/config-center.html)，真正达到灵活部署的地步。具体来说，整个方案有以下几个要点：
+很多时候，强制弹窗，影响用户交互的行为是令人反感的；入侵弹窗页面的代码实现方案也是难以跟上发版节奏和运营需求的。我们采用的是在每个```Activity```的根节点里增加一层```WebView```，覆盖在原有页面之上，并且拦截、控制拦截触摸事件，可以将事件传递给原有页面，不影响原有页面的点击、滑动操作，从而达到弹窗与页面相互融合的境界。为了达到动态化、无业务代码侵入，将整体实现方案打包在一个模块内，配合我们的[配置中心](http://pingguohe.net/2016/03/18/config-center.html)，真正达到灵活部署的地步。具体来说，整个方案有以下几个要点：
 
-* 弹窗的控制是通过规则配置，规则的主要内容包括『宿主页面』、『弹窗内容 URL』、『弹窗时间段』、『弹窗次数』、『点透阈值』等；
-* 监听```ActivityLifecycleCallbacks```，在其```onActivityResumed()```方法里检查配置规则，比如页面符合『宿主页面』，未超出规定的『弹窗次数』，那边就会通过```activity.getWindow().addContentView()```添加一层```WebView```，加载『弹窗内容 URL』里的内容；在其```onActivityPaused()```方法里再删除可能存在的弹窗；
-* 监听自定义```LocalBroadcast```，通过消息里携带的信息去查找可用的弹窗配置，如果有的话，也可以弹窗，这样提供了另外一种弹窗的途径；
+* 触发弹窗的时机一般有两种：一种是在切换到新页面时自动弹出，另一种是再当前页面用户产生交互之后触发弹出。前者通过监听页面切换生命周期事件来触发，后者通过发广播、监听广播来触发。
+* 弹窗的控制是通过规则配置，规则的主要内容包括『宿主页面』、『弹窗内容 URL』、『弹窗时间段』、『弹窗次数』、『点透阈值』等；一个弹窗活动的配置项内容大致如下，在整个弹窗配置模块里，会有多个这样的配置项存在，代表多个线上活动。
+	
+	```
+	{
+		"uri":"com.tmall.wireless.homepage.TMHomePageActivity", //通过页面切换触发时，配置的是页面的类名；通过广播消息触发时，配置的是标识消息的一个唯一 id；
+		"url":"http://www.tmall.com/", //弹出的H5页面url
+		"modalThreshold":0.5, // 可以点透的透明度阈值
+		"appear":false, // 如果是false，就按下面的时间决定是否弹出，如果为true则不看下面的时间
+		"startTime":"2016-04-21 00:00:00",
+		"endTime":"2016-05-01 00:00:00",
+       	"times":0 // 弹出次数，0为不限
+	}
+	```
+* 通过页面切换触发弹窗，需要监听```ActivityLifecycleCallbacks```，在其```onActivityResumed()```方法里检查配置规则：
+	1. 遍历上述活动配置项
+	2. 检查 uri 字段与当前 activity 类名否一致
+	3. 检查该活动弹窗次数有无超出限制
+	4. 检查活动是否有效期内
+	
+	当查找到第一个符合2、3、4条件的活动配置时，就返回这个配置项，准备弹窗。
+	
+	```
+    View webview = activity.getWindow().findViewById(R.id.webview_container_id);
+    if (null != webview) {
+        //若已经存在一个弹窗，则不在加载新的弹窗
+        return;
+    }
+    PenetrateWebViewContainer wvContainer = new PenetrateWebViewContainer(activity);
+    wvContainer.setId(R.id.webview_container_id);
+    wvContainer.setVisibility(View.INVISIBLE);
+    IWVWebView wvwebview = buildWebView(activity, config);
+    wvContainer.setPenetrateAlpha((int) (config.getModalThreshold() * 255));
+    activity.getWindow().addContentView(wvContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    wvContainer.loadUrl(config.getUrl());
+	```
+	
+	当页面退出时，系统会回调```onActivityPaused()```方法里，在这里再删除可能存在的弹窗；
+
+* 通过广播来触发弹窗，需要监听自定义```LocalBroadcast```，流程与上述步骤一样，只是检查规则的时候，第2步不再检查页面类名，而是检查广播里传递过来的唯一 id。
 * ```WebView```及内部 H5 页面的背景一般是透明的，这样不影响与宿主页面的交互，```WebView```外面其实包裹了一层```FrameLayout```，用来控制触摸事件的传递，它会获取所点击处的 H5 内容的透明度，和『点透阈值』比对，如果透明度超出了阈值，将事件传递给宿主页面，表明该区域可点透，否则让 H5 页面消化掉；
-* 弹窗被添加之后，默认是不可见的，需要在 H5 页面加载完之后，调用hybrid接口显示出来；这是为了解决在某些场景下会显示错误页面；
+	
+	```
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        try {
+            ...
+            final int pixel = getDrawingCache().getPixel((int) event.getX(), (int) event.getY());
+            final int alpha = 255 - Color.alpha(pixel);
+            if (alpha > mPenetrateAlpha)
+                return true;
+            return false;
+        } catch (Throwable e) {
+            return true;
+        }
+    }
+	```
+	
+* 弹窗被添加之后，默认是不可见的，如上文代码所示。需要在 H5 页面加载完之后，调用hybrid接口显示出来；比如网络错误、页面有 bug 之类的问题，可以避免用户看到这类错误信息；
 * 弹窗次数限制由『弹窗次数』规则里控制，H5 页面在显示出来的时候需要调用相应的 hybrid 接口去加1；
 * 『弹窗时间段』规则控制了弹窗的时间，如果打开页面是在该时间段内，符合其他规则的弹窗将会直接弹窗；如果是打开页面是在该时间段前，还能定时弹出；
 * 每个宿主页面只加载一层弹窗，防止引起性能问题或者管理错乱；
@@ -30,6 +83,8 @@ author: Longerian
 ![实现方案——基本雏形](https://img.alicdn.com/tps/TB1G7lbMXXXXXacapXXXXXXXXXX-493-196.png)
 
 通过这样几条规则的灵活控制，外加[配置中心](http://pingguohe.net/2016/03/18/config-center.html)动态调整规则的能力，可以方便地为具体某个页面增加弹窗的营销能力，而 H5 页面的内容是天生具备动态能力的，整体配合起来就提供了一套完整的运营平台。从去年双十一开始的『红包雨』、『下雪氛围』、『春节舞龙』等等一系列活动，都是在这个平台上承载的。
+
+当然，通过```WebView```来弹窗，也比传统的弹窗功能多了一些不确定的因素。首先```WebView```本身在线上存在少量异常，webview 出错，弹窗自然也弹不出来了；还有假如低配手机上内存不足，可能也会影响弹窗；不过这些还是小概率的，比较普遍的是弱网下，H5 页面加载比较慢，影响用户体验。从运行半年多的经验来看，crash倒是没有，稳定性还挺高的，偶尔有几个活动有舆情反馈谁看不到弹窗。所以这方面，还有一些优化手段也在继续做：一是升级```WebView```控件为阿里内部的```UCWebView```，速度更快、内存消耗更少；二是 H5 页面缓存包提前下发，用户设备就可以直接加载本地页面文件，而不需要联网下载。
 
 ## 再进一步——提升动态能力
 
