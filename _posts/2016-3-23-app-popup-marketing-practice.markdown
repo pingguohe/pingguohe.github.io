@@ -23,7 +23,7 @@ author: Longerian
 	
 	```
 	{
-		"uri":"com.tmall.wireless.homepage.TMHomePageActivity", //通过页面切换触发时，配置的是页面的类名；通过广播消息触发时，配置的是标识消息的一个唯一 id；
+		"uri":"com.tmall.android.XXActivity", //通过页面切换触发时，配置的是页面的类名；通过广播消息触发时，配置的是标识消息的一个唯一 id；
 		"url":"http://www.tmall.com/", //弹出的H5页面url
 		"modalThreshold":0.5, // 可以点透的透明度阈值
 		"appear":false, // 如果是false，就按下面的时间决定是否弹出，如果为true则不看下面的时间
@@ -46,10 +46,10 @@ author: Longerian
         //若已经存在一个弹窗，则不在加载新的弹窗
         return;
     }
-    PenetrateWebViewContainer wvContainer = new PenetrateWebViewContainer(activity);
+    WebViewContainer wvContainer = new WebViewContainer(activity);
     wvContainer.setId(R.id.webview_container_id);
     wvContainer.setVisibility(View.INVISIBLE);
-    IWVWebView wvwebview = buildWebView(activity, config);
+    WebView wvwebview = buildWebView(activity, config);
     wvContainer.setPenetrateAlpha((int) (config.getModalThreshold() * 255));
     activity.getWindow().addContentView(wvContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     wvContainer.loadUrl(config.getUrl());
@@ -87,7 +87,7 @@ author: Longerian
 ![dragon](https://gw.alicdn.com/tps/TB1P3N4MXXXXXbKXpXXXXXXXXXX-270-405.png)
 ![padan](https://gw.alicdn.com/tps/TB1lT4QMXXXXXbmXVXXXXXXXXXX-270-405.png)
 
-当然，通过```WebView```来弹窗，也比传统的弹窗功能多了一些不确定的因素。首先```WebView```本身在线上存在少量异常，webview 出错，弹窗自然也弹不出来了；还有假如低配手机上内存不足，可能也会影响弹窗；不过这些还是小概率的，比较普遍的是弱网下，H5 页面加载比较慢，影响用户体验。从运行半年多的经验来看，crash倒是没有，稳定性还挺高的，偶尔有几个活动有舆情反馈谁看不到弹窗。所以这方面，还有一些优化手段也在继续做：一是升级```WebView```控件为阿里内部的```UCWebView```，速度更快、内存消耗更少；二是 H5 页面缓存包提前下发，用户设备就可以直接加载本地页面文件，而不需要联网下载。
+当然，通过```WebView```来弹窗，也比传统的弹窗功能多了一些不确定的因素。首先```WebView```本身在线上存在少量异常，webview 出错，弹窗自然也弹不出来了；还有假如低配手机上内存不足，可能也会影响弹窗；不过这些还是小概率的，比较普遍的是弱网下，H5 页面加载比较慢，影响用户体验。从运行半年多的经验来看，crash倒是没有，稳定性还挺高的，偶尔有几个活动有舆情反馈谁看不到弹窗。所以这方面，还有一些优化手段也在继续做：一是升级```WebView```控件为的```UCWebView```，速度更快、内存消耗更少；二是 H5 页面缓存包提前下发，用户设备就可以直接加载本地页面文件，而不需要联网下载。
 
 ## 再进一步——提升动态能力
 
