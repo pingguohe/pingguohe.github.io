@@ -13,7 +13,6 @@ UIScrollView可以说是我们在日常编程中使用频率最多、扩展性�
 **2**上拉更多：支持GIF，支持提前加载，滚动到最后能替换图片作为提示
 **3**回到顶部：当滚动多屏之后，往回划时右下角弹出回到顶部按钮
 **4**自定义一个按钮，在回到顶部按钮上面，可自定事件,并且会根据回到顶部按钮的出现或者消失上下移动，有动画过渡
-
 <img src="http://ww3.sinaimg.cn/mw690/a3165bbdgw1f2cqbpf7e6g20ac0j3npd.gif" width = "300" alt="分析图2" align=center /> 
 
 此类适用于任何继承于scrollView的类
@@ -59,7 +58,9 @@ UIScrollView可以说是我们在日常编程中使用频率最多、扩展性�
 4.contentInset
 
 ### 属性监听
+
 #### 1.监听`contentOffset`的目的
+
 由于我们使用了category，所以无法通过scrollView的`delegate`来获取其滚动，和一般的下拉刷新一样，我们在scrollView的头部添加了一个View，所以必须监听`contentOffset`才能做出行为判断，上拉更多亦是如此，废话不多说，直接上代码：
 
 ```objc
@@ -80,15 +81,19 @@ if([keyPath isEqualToString:@"contentOffset"])
 我们通过contentOffset的变化模拟出了一个scrollViewDidScroll的方法，并且在`refreshHeaderView`和`loadMoreFooterView`中来监听此方法，而这2个view都是`TMMuiPullView`,所以其实我只需要实现一次，我会在下文中来详细谈这个方法。
 
 #### 2.监听`contentSize`和`frame`的目的
+
 由于`useRefreshHeader`和`useLoadMoreFooter`声明之后，无法避免需要改动scrollView的`contentSize`和`frame`的值，所以每当这2个值发生变化的时候，我们需要去调整这2个view的位置和布局
 
 #### 3.监听`contentInset`的目的
+
 ios 7之后，scrollView在一定条件下，系统会调整其`contentInset`，或者人为的调整了`contentInset`，为了能让scrollView在各种动作之后依然处于正确的位置上，我们必须监听这个值，并且储存起来。
 
 ### TMMuiPullView 中的`scrollViewDidScroll`方法
+
 这个方法可谓是本类中最繁琐的方法，任何一个动作都需要区分是刷新还是更多2个情况来讨论
 
 #### TMMuiPullViewTypeRefresh
+
 1.当滚动的offset.y是大于0的时候，我们就直接`return`,因为之后不可能触发下拉刷新的动作，也就没有必要继续往下走了；
 2.我们假设拉到触发刷新动作的距离是100%的话，那么在未触发前都会有对应的一个进度，通过这个进度我们去gif中获取处于这个进度的那一帧图片，并且把他显示到View上，从而达到跟手逐针播放的效果
 3.接下来就是状态判断了，在此，我们为其定制了5个状态：
@@ -117,20 +122,24 @@ typedef NS_ENUM(NSUInteger, TMMuiPullState)
 	这个最后一个房间，我们就等着进度恢复成初始状态，那么就能顺利的完成这一次密室逃脱，状态置为`TMMuiPullStateNone`
 	
 #### TMMuiPullViewTypeLoadMore
+
 1.当hasMorePage等于yes的时候，我们用的是loading图片，而当hasMorePage等于no时，我们就用没有更多的图片。
 2.其余部分其实和`TMMuiPullViewTypeRefresh`是同一个道理，只是关键性的值发生了改变这里就不在重复展开了。
 
 ## 回到顶部
+
 1.当设置ShowBackTopButton为Yes时，我们会为scrollView添加一个contentOffset的监听
 2.创建一个回到顶部的button，并且添加到与整个scrollView的superView上，并且在屏幕下方隐藏。
 3.contentOffset 偏移量大于2屏，且往回滚动时，回到顶部按钮向上做动画上升，否则动画下落
 4.当点击回到顶部按钮时，scrollView就调用setContentOffset的方法，滚回顶部
 
 ## 滚回顶部上方的自定义按钮
+
 1.在滚回顶部上方可以添加一个按钮，位于整个试图的右下角，当滚回顶部按钮出现时，它也会随之上升，相反会滚回原来的位置。
 
 
 ## 注意点
+
 在这个类中我们需要有2个注意点：
 1.KVO 不要多次添加，当多次添加KVO时就会有多个监听者监听同一个事件，所以我在每次添加监听的时候都会try着删除一次，记住，一定要写try，否则会crash。
 
@@ -138,5 +147,6 @@ typedef NS_ENUM(NSUInteger, TMMuiPullState)
 
 
 ## 总结
+
 虽然本篇博客并没有提及任何实现的具体代码，而是提供一种思路，希望通过了解这些思路，能构建出一个属于你自己的scrollView的category，如果真的有需要，我会代码脱敏之后分享。
 
