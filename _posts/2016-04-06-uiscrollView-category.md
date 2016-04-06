@@ -13,7 +13,7 @@ UIScrollView可以说是我们在日常编程中使用频率最多、扩展性�
 **2**上拉更多：支持GIF，支持提前加载，滚动到最后能替换图片作为提示
 **3**回到顶部：当滚动多屏之后，往回划时右下角弹出回到顶部按钮
 **4**自定义一个按钮，在回到顶部按钮上面，可自定事件,并且会根据回到顶部按钮的出现或者消失上下移动，有动画过渡
-<img src="http://ww3.sinaimg.cn/mw690/a3165bbdgw1f2cqbpf7e6g20ac0j3npd.gif" width = "300" alt="分析图2" align=center /> 
+![图3](/images/UIScrollView.gif)
 
 此类适用于任何继承于scrollView的类
 
