@@ -9,9 +9,13 @@ author: 尛破孩-波波
 
 ## 前言
 UIScrollView可以说是我们在日常编程中使用频率最多、扩展性最好的一个类，根据不同的需求和设计，我们都能玩出花来，当然有一些需求是大部分应用通用的，今天就聊一下以下需求，在一个category中统统搞定：
+
 **1**下拉刷新：支持下拉过程中GIF逐帧，loading时可自定义帧率
+
 **2**上拉更多：支持GIF，支持提前加载，滚动到最后能替换图片作为提示
+
 **3**回到顶部：当滚动多屏之后，往回划时右下角弹出回到顶部按钮
+
 **4**自定义一个按钮，在回到顶部按钮上面，可自定事件,并且会根据回到顶部按钮的出现或者消失上下移动，有动画过渡
 
 ![图3](/images/UIScrollView.gif)
@@ -53,9 +57,13 @@ UIScrollView可以说是我们在日常编程中使用频率最多、扩展性�
 ```
 
 更为关键的，我们需要用KVO监听以下几个属性：
+
 1.contentOffset
+
 2.contentSize
+
 3.frame
+
 4.contentInset
 
 ### 属性监听
@@ -96,7 +104,10 @@ ios 7之后，scrollView在一定条件下，系统会调整其`contentInset`，
 #### TMMuiPullViewTypeRefresh
 
 1.当滚动的offset.y是大于0的时候，我们就直接`return`,因为之后不可能触发下拉刷新的动作，也就没有必要继续往下走了；
-2.我们假设拉到触发刷新动作的距离是100%的话，那么在未触发前都会有对应的一个进度，通过这个进度我们去gif中获取处于这个进度的那一帧图片，并且把他显示到View上，从而达到跟手逐针播放的效果
+
+2.我们假设拉到触发刷新动作的距离是100%的话，那么在未触发前都会有对应的一个进度，通过这个进度我们去gif中获取处于这
+个进度的那一帧图片，并且把他显示到View上，从而达到跟手逐针播放的效果
+
 3.接下来就是状态判断了，在此，我们为其定制了5个状态：
 
 ```objc
@@ -130,8 +141,11 @@ typedef NS_ENUM(NSUInteger, TMMuiPullState)
 ## 回到顶部
 
 1.当设置ShowBackTopButton为Yes时，我们会为scrollView添加一个contentOffset的监听
+
 2.创建一个回到顶部的button，并且添加到与整个scrollView的superView上，并且在屏幕下方隐藏。
+
 3.contentOffset 偏移量大于2屏，且往回滚动时，回到顶部按钮向上做动画上升，否则动画下落
+
 4.当点击回到顶部按钮时，scrollView就调用setContentOffset的方法，滚回顶部
 
 ## 滚回顶部上方的自定义按钮
@@ -142,6 +156,7 @@ typedef NS_ENUM(NSUInteger, TMMuiPullState)
 ## 注意点
 
 在这个类中我们需要有2个注意点：
+
 1.KVO 不要多次添加，当多次添加KVO时就会有多个监听者监听同一个事件，所以我在每次添加监听的时候都会try着删除一次，记住，一定要写try，否则会crash。
 
 2.runtime交换方法，因为我有许多指针一直持有内存，如果不把这个指针置为nil，也会导致crash，但是我们知道category是没办法重写方法的，所以我们只能用`method_exchangeImplementations`的方法来做交换，这里我交换了2个地方一个是`dealloc`，另一个是`didMoveToSuperview`,因为我们有一些view是放在superView上面的。
