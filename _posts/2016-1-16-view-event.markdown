@@ -6,7 +6,7 @@ author: 赵林
 
 --- 
 
-###Android中的Touch事件
+### Android中的Touch事件
 Android中的touch事件都封装在MotionEvent中，包括ACTION_UP, ACTION_DOWN, ACTION_MOVE等，处理touch事件的主要有三个方法  
 
 + onTouchEvent(): 事件消费  
@@ -15,7 +15,7 @@ Android中的touch事件都封装在MotionEvent中，包括ACTION_UP, ACTION_DOW
 
 这三个方法的返回值都是boolean类型的。
 
-###touch事件测试
+### touch事件测试
 首先建立三个嵌套的view，由内向外依次为TopView(红色), MiddleView(绿色)和BottomView(蓝色)  
 
 ```xml
@@ -72,7 +72,7 @@ middle view->onTouchEvent
 bottom view->onTouchEvent  
 ```
 
-从结果可以看出touch事件是由外层向内传递的，onTouchEvent是由内向外执行的。默认情况下不对touch事件进行拦截，并对touch事件进行消费。 
+从结果可以看出touch事件是由外层向内传递的，onTouchEvent是由内向外执行的。默认情况下不对touch事件进行拦截，也不会对touch事件进行消费。 
 
 (2)事件拦截
 将MiddleView的onInterceptTouchEvent()方法的返回值设为true，其余默认，即MiddleView会拦截touch事件，运行结果为
@@ -135,9 +135,9 @@ middle view->onTouchEvent
 
 MiddleView在ACTION_DOWN和ACTION_UP两个动作的时候都执行了一次onTouchEvent()，和之前默认情况多了一次执行，在未消费的情况下只监听到了ACTION_DOWN这个动作，说明如果ACTION_DOWN未消费的话，ACTION_UP也不会消费。
 
-###总结
+### 总结
 (1) touch事件是由父View向子View传递的，消费的时候是由子View向父View传递的。  
 (2) 这三个方法执行优先级为dispatchTouchEvent()->onInterceptTouchEvent()->onTouchEvent()。  
 (3) 父View可以通过onInterceptTouchEvent()防止事件向后传递。  
 (4) onInterceptTouchEvent()可以将事件拦截在某一层，事件是可以在这一层被消费的；而dispatchTouchEvent()可以组织事件在某一层下发，在这一层无法被消费。  
-(5)onTouchEvent()中的ACTION_DOWN如果没有被消费，则ACTION_UP也不会被消费。  
+(5) onTouchEvent()中的ACTION_DOWN如果没有被消费，则ACTION_UP也不会被消费。  
