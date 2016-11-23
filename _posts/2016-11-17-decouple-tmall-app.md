@@ -8,6 +8,9 @@ author: gaosboy
 
 **先要说一句：惭愧，惭愧。这本来是今年夏天在北京GMTC上的分享，其实早就应该整理成文。哎，拖延癌晚期的症状始终没有缓解，又恰好找到了一个要做双11的借口，至此。**
 
+在GMTC官网可以下载这次分享的资料：[http://ppt.geekbang.org/slide/show/194][1]
+
+
 本文标题是**解耦**，聊解耦可以有很多方法，本文以**架构进化**为线索给各位分享手机天猫的解耦之路。我想，在手机天猫的成长过程中，一些形而上的思考和沉淀固然是对大家有参考价值的，而工具和方案则借鉴价值更大。所以本文会较少篇幅放在讲过程和原因，比较多篇幅放在讲工具和方案。
 
 # 什么在推动进化
@@ -113,7 +116,7 @@ author: gaosboy
 2. 依赖耦合，顾名思义，两个模块之间的有依赖，就是耦合
 3. 工程耦合，每个模块有自己的生命周期和运行时，每个模块在生产环境里又需要依赖主工程的运行时
 
-+ Beehive（Beehive已经开源，可以在Github上看到源码：[https://github.com/alibaba/BeeHive][1]）
++ Beehive（Beehive已经开源，可以在Github上看到源码：[https://github.com/alibaba/BeeHive][2]）
 
 Beehive是一个运行时框架，主要解决依赖耦合和工程耦合。
 
@@ -147,7 +150,7 @@ Beehive的原理是，每一个对外提供服务的模块，需要注册一个�
 
 + 统跳协议 & Rewrite引擎
 
-统调协议是一个基于URL的跳转方案，配合Rewrite引擎实现全App调用解耦。此前**苹果核**有[一篇文章][2]详细介绍，这里我就不详述细节。
+统调协议是一个基于URL的跳转方案，配合Rewrite引擎实现全App调用解耦。此前**苹果核**有[一篇文章][3]详细介绍，这里我就不详述细节。
 
 + Beehive和统跳&Rewrite的区别
 
@@ -155,8 +158,9 @@ Beehive和统跳协议的目的都是解耦，然后二者所关注的重心不�
 
 以上，就是我们在过去的几年里，整个手机天猫所经历的解耦过程。在这个过程里，我们有过很多思考，也踩了很多坑，当然也沉淀了很多好用的工具。希望接下来能有更多机会跟各位分享，也欢迎各位跟我们交流，互相学习。
 
-[1]:	https://github.com/alibaba/BeeHive
-[2]:	http://pingguohe.net/2015/11/24/Navigator-and-Rewrite.html "解耦神器 —— 统跳协议和Rewrite引擎"
+[1]:	http://ppt.geekbang.org/slide/show/194
+[2]:	https://github.com/alibaba/BeeHive
+[3]:	http://pingguohe.net/2015/11/24/Navigator-and-Rewrite.html "解耦神器 —— 统跳协议和Rewrite引擎"
 
 [image-1]:	https://gw.alicdn.com/tps/TB1nEl.OpXXXXbVapXXXXXXXXXX-2398-926.png "进化论"
 [image-2]:	https://gw.alicdn.com/tps/TB1GGCEOpXXXXbdXXXXXXXXXXXX-354-326.png "图2"
