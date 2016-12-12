@@ -5,11 +5,15 @@ permalink: /joinus/
 author: 天猫无线
 ---
 
-**当你读完下边这些，或许你需要这个邮箱地址：[boling@tmall.com](mailto:boling@tmall.com)**
+# We Want You!
+
+iOS/Android/Java后端/前端开发专家。跟我们一起建设技术平台，前端（iOS/Android/Mobile Web）动态框架，后端微服务业务容器，强大易用的业务工具，能够形成一个大闭环的完整基础设施链。
+
+**当你读完下边这些，或许你需要这个邮箱地址：[boling@tmall.com][1]**
 
 ### 我们一直在思考我们可以给你提供什么
 
-[>> 围观阿里园区](/joinus/work.html)
+[\>\> 围观阿里园区][2]
 
 + 四季如画的风景
 + 一步一景的园区
@@ -52,4 +56,8 @@ author: 天猫无线
 
 #### 恰好，我们抓到了这样一个机会
 
-**你需要这个邮箱地址：[boling@tmall.com](mailto:boling@tmall.com)**
+**你需要这个邮箱地址：[boling@tmall.com][3]**
+
+[1]:	mailto:boling@tmall.com
+[2]:	/joinus/work.html
+[3]:	mailto:boling@tmall.com
