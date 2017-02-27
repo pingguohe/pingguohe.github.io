@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  Tangram 的基础 —— vlayout
+title:  Tangram 的基础 —— vlayout（Android）
 author: Longerian
 
 ---
