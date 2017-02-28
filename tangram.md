@@ -16,8 +16,8 @@ showonnav: yes
 
 
 
-[1]:	http://127.0.0.1:4000/2017/02/28/vlayout-design.html
-[2]:	http://127.0.0.1:4000/2016/12/20/Tangram-design-and-practice.html
-[3]:	http://127.0.0.1:4000/2016/01/31/lazyscroll.html
+[1]:	http://pingguohe.net/2017/02/28/vlayout-design.html
+[2]:	http://pingguohe.net/2016/12/20/Tangram-design-and-practice.html
+[3]:	http://pingguohe.net/2016/01/31/lazyscroll.html
 
 [image-1]:	https://gw.alicdn.com/tps/TB16xwrOpXXXXc.XFXXXXXXXXXX-2880-1402.png_400x400.jpg "Tangram"
