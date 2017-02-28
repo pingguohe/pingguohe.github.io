@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 关于苹果核
+title: 关于
 permalink: /about/
 author: gaosboy
 showonnav: yes
