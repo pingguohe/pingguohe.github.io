@@ -18,12 +18,14 @@ Demo请直接Clone Github工程，在master分支，打开LazyScrollViewDemo文�
 
 ### 创建视图
 
-````objectivec
+```objc
+
 TMMuiLazyScrollView *scrollview = [[TMMuiLazyScrollView alloc]init];
     scrollview.frame = self.view.bounds;
     scrollview.dataSource = self;    
     [self.view addSubview:scrollview];
-````
+
+```
 
 和正常的ScrollView一样init即可，只需要注意一点的是，需要有一个实现`TMMuiLazyScrollViewDataSource`的类，赋给LazyScrollView的`dataSource`
 
@@ -54,7 +56,7 @@ muiID就是rectModel的muiID，可以根据muiID生成相关的View
 
 Demo中这个方法内部的写法是:
 
-````objectivec
+```objc
 LazyScrollViewCustomView *label = (LazyScrollViewCustomView *)[scrollView dequeueReusableItemWithIdentifier:@"testView"];
     NSInteger index = [muiID integerValue];
     if (!label)
@@ -65,7 +67,7 @@ LazyScrollViewCustomView *label = (LazyScrollViewCustomView *)[scrollView dequeu
     }
     label.frame = [(NSValue *)[rectArray objectAtIndex:index]CGRectValue];
     label.text = [NSString stringWithFormat:@"%lu",(unsigned long)index];
-````
+```
 
 流程是：先取一下复用池中可复用的View，有的话，赋给对应的frame，没有的话，生成一个，并给予一个复用标记。
 
@@ -75,10 +77,10 @@ LazyScrollViewCustomView *label = (LazyScrollViewCustomView *)[scrollView dequeu
 
 设置一下contentSize ， 并且Reload一下即可。
 
-````objectivec
+```objc
  scrollview.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 1230);
  [scrollview reloadData];
-````
+```
 
 ### 视图生命周期
 
