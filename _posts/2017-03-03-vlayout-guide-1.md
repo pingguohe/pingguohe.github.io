@@ -132,5 +132,5 @@ recycler.setAdapter(myAdapter);
 * ```FixAreaLayoutHelper```：fix 类型的布局，子节点不随页面滚动而滚动。主要实现```layoutViews()```、```beforeLayout()```、```afterLayout()```等方法，可参考```FixLayoutHelper```。
 
 ## 相关文章
-+ [Tangram 的基础 —— vlayout（Android）](2017-02-28-vlayout-design.md)
-+ [vlayout使用说明（二）](2017-03-03-vlayout-guide-2.md)
++ [Tangram 的基础 —— vlayout（Android）](http://pingguohe.net/2017/02/28/vlayout-design.html)
++ [vlayout使用说明（二）](http://pingguohe.net/2017/03/03/vlayout-guide-2.html)

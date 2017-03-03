@@ -246,5 +246,5 @@ fix类型的```LayoutHelper```，在可能需要设置一个相对父容器四�
 ```public void setOffset(int offset)```
 
 ## 相关文章
-+ [Tangram 的基础 —— vlayout（Android）](2017-02-28-vlayout-design.md)
-+ [vlayout使用说明（一）](2017-03-03-vlayout-guide-1.md)
++ [Tangram 的基础 —— vlayout（Android）](http://pingguohe.net/2017/02/28/vlayout-design.html)
++ [vlayout使用说明（一）](http://pingguohe.net/2017/03/03/vlayout-guide-1.html)
