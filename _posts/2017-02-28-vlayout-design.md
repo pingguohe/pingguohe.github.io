@@ -60,7 +60,7 @@ demo动效
 本文着重介绍 vlayout 的设计思路和原理，如果要进一步熟悉其细节，最好是到 [github](https://github.com/alibaba/vlayout) 上下载源码阅读，结合本文的说明，效果会更佳。如果想要尝试使用 vlayout 搭建页面，也可以到 [github](https://github.com/alibaba/vlayout) 上下载 demo，阅读使用文档和样式属性说明文档。
 
 ## 相关文章
-+ [vlayout使用说明（一）](2017-03-03-vlayout-guide-1)
-+ [vlayout使用说明（二）](2017-03-03-vlayout-guide-2)
++ [vlayout使用说明（一）](2017-03-03-vlayout-guide-1.md)
++ [vlayout使用说明（二）](2017-03-03-vlayout-guide-2.md)
 
 > 『很惭愧，就做了一点微小的工作』
