@@ -10,6 +10,8 @@ author: fydx
 
 LazyScrollView 已开源，详见：[https://github.com/alibaba/LazyScrollView](https://github.com/alibaba/LazyScrollView)
 
+已上传至cocoapods spec,在自己的工程里面使用，可以直接使用cocoapods, Podfile里面加一条`pod 'LazyScroll'`即可
+
 Demo也在Github仓库中，Demo的详细说明见[http://pingguohe.net/2017/03/02/lazyScrollView-demo.html](http://pingguohe.net/2017/03/02/lazyScrollView-demo.html)
 
 ## LazyScroll是什么
