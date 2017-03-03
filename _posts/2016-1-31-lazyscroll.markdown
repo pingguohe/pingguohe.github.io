@@ -6,7 +6,15 @@ author: fydx
 
 --- 
 
-##LazyScroll是什么
+2017-03-02更新：
+
+LazyScrollView 已开源，详见：[https://github.com/alibaba/LazyScrollView](https://github.com/alibaba/LazyScrollView)
+
+已上传至cocoapods spec,在自己的工程里面使用，可以直接使用cocoapods, Podfile里面加一条`pod 'LazyScroll'`即可
+
+Demo也在Github仓库中，Demo的详细说明见[http://pingguohe.net/2017/03/02/lazyScrollView-demo.html](http://pingguohe.net/2017/03/02/lazyScrollView-demo.html)
+
+## LazyScroll是什么
 
 LazyScrollView 继承自ScrollView，目标是解决异构（与TableView的同构对比）滚动视图的复用回收问题。它可以支持跨View层的复用，用易用方式来生成一个高性能的滚动视图。此方案最先在天猫iOS客户端的首页落地。
 
