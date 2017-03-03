@@ -8,25 +8,28 @@ showonnav: yes
 
 ![手机天猫界面解决方案][image-1]
 
-### [vlayout使用说明（二）][1]
+# 设计理念
++ [页面动态化的基础 —— Tangram][1]
 
-### [vlayout使用说明（一）][2]
+# Android
++ [vlayout使用说明（二）][2]
 
-### [iOS 高性能异构滚动视图构建方案 - LazyScrollView 详细用法][3]
++ [vlayout使用说明（一）][3]
 
-### [Tangram 的基础 —— vlayout（Android）][4]
++ [Tangram 的基础 —— vlayout（Android）][4]
 
-### [页面动态化的基础 —— Tangram][5]
+# iOS
++ [iOS 高性能异构滚动视图构建方案 - LazyScrollView 详细用法][5]
 
-### [iOS 高性能异构滚动视图构建方案 —— LazyScrollView][6]
++ [iOS 高性能异构滚动视图构建方案 —— LazyScrollView][6]
 
 
 
-[1]:	http://pingguohe.net/2017/03/03/vlayout-guide-2.html
-[2]:	http://pingguohe.net/2017/03/03/vlayout-guide-1.html
-[3]:	http://pingguohe.net/2017/03/02/lazyScrollView-demo.html
+[1]:	http://pingguohe.net/2016/12/20/Tangram-design-and-practice.html
+[2]:	http://pingguohe.net/2017/03/03/vlayout-guide-2.html
+[3]:	http://pingguohe.net/2017/03/03/vlayout-guide-1.html
 [4]:	http://pingguohe.net/2017/02/28/vlayout-design.html
-[5]:	http://pingguohe.net/2016/12/20/Tangram-design-and-practice.html
+[5]:	http://pingguohe.net/2017/03/02/lazyScrollView-demo.html
 [6]:	http://pingguohe.net/2016/01/31/lazyscroll.html
 
 [image-1]:	https://gw.alicdn.com/tps/TB16xwrOpXXXXc.XFXXXXXXXXXX-2880-1402.png_400x400.jpg "Tangram"
