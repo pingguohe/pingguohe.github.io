@@ -16,6 +16,9 @@ Demo请直接Clone Github工程，在master分支，打开LazyScrollViewDemo文�
 
 具体用法都在ViewController这个类内。
 
+在自己的工程里面使用，可以直接使用cocoapods, Podfile里面加一条`pod 'LazyScroll'`即可
+
+
 ### 创建视图
 
 ```objc
