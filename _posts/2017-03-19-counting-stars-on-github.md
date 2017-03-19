@@ -116,7 +116,7 @@ star 数超过2000的项目总共有**4550**个，可以看一下 TOP 50都是�
 最后献上几段流水账脚本[github_stat]，有兴趣的可以拿去挖掘更多数据。
 
 # What's more
-接下来一段时间内我们团队也会继续退出新的开源项目，敬请关注苹果核。
+接下来一段时间内我们团队也会继续推出新的开源项目，敬请关注苹果核。
 
 [vlayout]:<https://github.com/alibaba/vlayout>
 [lazyScrollView]:<https://github.com/alibaba/lazyscrollview>
