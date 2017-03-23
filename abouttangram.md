@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tangram技术集
-permalink: /tangram/
+permalink: /abouttangram/
 author: gaosboy
 showonnav: yes
 ---
