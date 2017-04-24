@@ -6,7 +6,15 @@ author: fydx
 
 --- 
 
-##LazyScroll是什么
+2017-03-02更新：
+
+LazyScrollView 已开源，详见：[https://github.com/alibaba/LazyScrollView](https://github.com/alibaba/LazyScrollView)
+
+已上传至cocoapods spec,在自己的工程里面使用，可以直接使用cocoapods, Podfile里面加一条`pod 'LazyScroll'`即可
+
+Demo也在Github仓库中，Demo的详细说明见[http://pingguohe.net/2017/03/02/lazyScrollView-demo.html](http://pingguohe.net/2017/03/02/lazyScrollView-demo.html)
+
+## LazyScroll是什么
 
 LazyScrollView 继承自ScrollView，目标是解决异构（与TableView的同构对比）滚动视图的复用回收问题。它可以支持跨View层的复用，用易用方式来生成一个高性能的滚动视图。此方案最先在天猫iOS客户端的首页落地。
 
@@ -155,9 +163,9 @@ LazyScrollView的核心是在初始状态就得知所有View应该显示的位�
 
 ![](https://img.alicdn.com/tps/TB137Z6LpXXXXbJXVXXXXXXXXXX-480-935.png)
 
-现在已知的是红圈顶边y是<b>242</b>，底边y是<b>949</b>，加上缓冲区Buffer，应该是找<b>222 - 969</b> 之间的View。我们要做的是，找到<b>底边y小于969的Model</b>和<b>顶边y大于222的Model</b>，取交集，就是我们要显示的View
+现在已知的是红圈顶边y是<b>242</b>，底边y是<b>949</b>，加上缓冲区Buffer，应该是找<b>222 - 969</b> 之间的View。我们要做的是，找到<b>顶边y小于969的Model</b>和<b>底边y+height大于222的Model</b>，取交集，就是我们要显示的View
 
-采用的方法为二分查找，在根据顶边升序排序的索引中找949，找到的index为0(MUIID为2/2)，我们使用一个Set，把根据顶边排序中<b>index >= 0</b> 的元素先放在这里。获取的Set中包含的muiID为 <b>0/0,0/1,0/2,0/3,1/0,1/1,1/2,1/3,2/0,2/1,2/2</b>。
+采用的方法为二分查找，在根据顶边升序排序的索引中找969，找到的index为0(MUIID为2/2)，我们使用一个Set，把根据顶边排序中<b>index >= 0</b> 的元素先放在这里。获取的Set中包含的muiID为 <b>0/0,0/1,0/2,0/3,1/0,1/1,1/2,1/3,2/0,2/1,2/2</b>。
 
 根据底边排序的索引中找222，找到的index为2，我们把<b>index >= 2</b>的元素放在另一个Set，获取的Set中包含的muiID为<b>0/2,0/3,1/0,1/1,1/2,1/3,2/0,2/1,2/2</b>
 
