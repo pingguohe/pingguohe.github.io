@@ -89,6 +89,8 @@ CustomAdapter adapter = new CustomAdapter(data, new GridLayoutHelper());
 delegateAdapter.addAdapter(adapter);
 
 ```
+**更新：hasConsistItemType这个参数有时候容易被人忽略，当hasConsistItemType=true的时候，不论是不是属于同一个子adapter，相同类型的item都能复用。表示它们共享一个类型。
+当hasConsistItemType=false的时候，不同子adapter之间的类型不共享**
 
 * 另一种是当业务有自定义的复杂需求的时候, 可以继承自```VirtualLayoutAdapter```, 实现自己的Adapter
 
