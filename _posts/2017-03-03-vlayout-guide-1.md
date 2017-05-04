@@ -65,6 +65,7 @@ RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 recyclerView.setRecycledViewPool(viewPool);
 viewPool.setMaxRecycledViews(0, 10);
 ```
+**更新：看了很多人写的demo和源码解析后，需求提醒注意上述示例代码里只针对type=0的item设置了复用池的大小，如果你的页面有多种type，需要为每一种类型的分别调整复用池大小参数。**
 
 加载数据时有两种方式:
 
