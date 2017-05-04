@@ -73,7 +73,7 @@ viewPool.setMaxRecycledViews(0, 10);
 其他的和默认Adapter一样。
 
 ```java
-DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, hasStableItemType);
+DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, hasConsistItemType);
 recycler.setAdapter(delegateAdapter);
 
 // 之后可以通过 setAdapters 或 addAdapter方法添加DelegateAdapter.Adapter
