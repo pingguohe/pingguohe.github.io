@@ -36,6 +36,6 @@ showonnav: yes
 [5]:	http://pingguohe.net/2017/02/28/vlayout-design.html
 [6]:	http://pingguohe.net/2017/03/02/lazyScrollView-demo.html
 [7]:	http://pingguohe.net/2016/01/31/lazyscroll.html
-[8]:   http://pingguohe.net/2017/08/02/tac-1.0.html
+[8]:	http://pingguohe.net/2017/08/02/tac-1.0.html
 
 [image-1]:	https://gw.alicdn.com/tps/TB16xwrOpXXXXc.XFXXXXXXXXXX-2880-1402.png_400x400.jpg "Tangram"
