@@ -13,6 +13,7 @@ author: 尛破孩-波波
 
 ## 从0开始搭建
 首先，我们先分析一下这个视图中包含的元素：
+
 ![img](http://upload-images.jianshu.io/upload_images/1603768-d95c0199c598aff5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 创建主图区域
@@ -102,21 +103,29 @@ author: 尛破孩-波波
 + 首先我们需要了解“CATransform3D”的几个属性。我们可以发现，他是一个三维矩阵
 	
 	CGFloat m11, m12, m13, m14;
+	
   	CGFloat m21, m22, m23, m24;
+  	
   	CGFloat m31, m32, m33, m34;
+  	
   	CGFloat m41, m42, m43, m44;
   		
-  	是不是似曾相识？不错，在大学课本中，我们有这么一个三维变化矩阵的表示
+ 是不是似曾相识？不错，在大学课本中，我们有这么一个三维变化矩阵的表示
   	
    a  b  c  p 
+   
    d  e  f  q	
+   
    g  h  i   r	
+   
    l  m  n  s 
 	
   我们来回忆一下 其中	
   		
    a   b   c 
+   
    d   e   f 
+   
    g   h   i 
  
   产生比例，错切，镜像和旋转等基本变化
@@ -128,7 +137,9 @@ author: 尛破孩-波波
   
 
    p 
+   
    q 
+   
    r 
  
   产生透视变化
@@ -141,17 +152,21 @@ author: 尛破孩-波波
  然而CATransform3D为我们封装了一些方法来操作，并且是可以在上一个基础效果上做叠加操作
  
  ```CATransform3D CATransform3DTranslate (CATransform3D t, CGFloat tx, CGFloat ty, CGFloat tz)```
+ 
 t：基础效果，将本次设值叠加于此
 tx：X轴偏移位置，往下为正数。
 ty：Y轴偏移位置，往右为正数。
 tz：Z轴偏移位置，往外为正数。
 
 	```CATransform3D CATransform3DScale (CATransform3D t, CGFloat sx, CGFloat sy, CGFloat sz)```
+	
 t：基础效果，将本次设值叠加于此
 sx：X轴缩放，代表一个缩放比例，一般都是 0 - 1 之间的数字。
 sy：Y轴缩放。
 sz：整体比例变换时，也就是m11（sx）== m22（sy）时，若m33（sz）>1，图形整体缩小，若0<1，图形整体放大，若m33（sz）<0，发生关于原点的对称等比变换。
+
 	```CATransform3D CATransform3DRotate (CATransform3D t, CGFloat angle, CGFloat x, CGFloat y, CGFloat z)```
+	
 t：基础效果，将本次设值叠加于此
 angle：旋转的弧度，所以要把角度转换成弧度：角度 * M_PI / 180。
 x：向X轴方向旋转。值范围-1 - 1之间
@@ -161,6 +176,7 @@ z：向Z轴方向旋转。值范围-1 - 1之间
 
 ##### 上升
 + 第一部分，以X轴为旋转轴，将图片做旋转
+
 ![img](http://upload-images.jianshu.io/upload_images/1603768-b8d8d8e62a35cc8b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 	```objC
@@ -173,8 +189,10 @@ z：向Z轴方向旋转。值范围-1 - 1之间
 	```	
 
 + 第二部分 以x轴为旋转轴，将视图倾斜恢复，并且调整视图的Scale，使其缩小。在这两个效果叠加之后，肉眼并非看到顶部回转，而是看到底部被带动到后面，神奇吧
+
   ![](http://upload-images.jianshu.io/upload_images/1603768-e72fdc23f62a646b.gif?imageMogr2/auto-orient/strip)
-  操作的还是那几个方法
+  
+操作的还是那几个方法
   
   ```objC
   CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
@@ -241,6 +259,7 @@ z：向Z轴方向旋转。值范围-1 - 1之间
 			}];
 		}];
 	```
+	
 ![](http://upload-images.jianshu.io/upload_images/1603768-ad0c6d451eb7a19b.gif?imageMogr2/auto-orient/strip)
 
 #### 跟手拖拽动画
