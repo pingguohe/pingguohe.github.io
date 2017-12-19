@@ -13,6 +13,8 @@ showonnav: yes
 
 + [页面动态化的基础 —— Tangram][2]
 
++ [猫客页面内组件的动态化方案-Tangram 2.0][9]
+
 # Android
 + [vlayout使用说明（二）][3]
 
@@ -28,6 +30,8 @@ showonnav: yes
 # Server
 + [天猫APP改版之全新大首页架构&开发模式全面升级-TAC][8]
 
+# 知识图谱
++ [Tangram 知识图谱][10]
 
 [1]:	http://pingguohe.net/2017/03/30/what-is-tangram.html
 [2]:	http://pingguohe.net/2016/12/20/Tangram-design-and-practice.html
@@ -37,5 +41,7 @@ showonnav: yes
 [6]:	http://pingguohe.net/2017/03/02/lazyScrollView-demo.html
 [7]:	http://pingguohe.net/2016/01/31/lazyscroll.html
 [8]:	http://pingguohe.net/2017/08/02/tac-1.0.html
+[9]:	http://pingguohe.net/2017/12/07/Tangram-2.html
+[10]:	http://pingguohe.net/2017/12/19/Tangram-knowledge-graph.html
 
 [image-1]:	https://gw.alicdn.com/tps/TB16xwrOpXXXXc.XFXXXXXXXXXX-2880-1402.png_400x400.jpg "Tangram"
