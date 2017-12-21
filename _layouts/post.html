@@ -19,7 +19,7 @@ layout: default
 <script>
 var gitment = new Gitment({
     id: '{{ page.id }}', // 可选。默认为 location.href
-    owner: 'page.author',
+    owner: '{{ page.author }}',
     repo: 'pingguohe-comment',
     oauth: {
         client_id: '04ade5203856e146dc64',
