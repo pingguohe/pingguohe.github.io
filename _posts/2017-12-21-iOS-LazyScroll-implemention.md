@@ -12,7 +12,7 @@ LazyScrollView 继承自 UIScrollView，是为了解决异构（相对于 UITabl
 
 LazyScrollView 目前是天猫 iOS 客户端首页业务所使用的 Tangram 解决方案的核心底层组件，在通过复用降低所消耗内存的同时，维持了较高的性能。
 
-关于 LazyScrollView 的基本使用方法可以参考：[iOS 高性能异构滚动视图构建方案——LazyScrollView](https://www.atatech.org/articles/48602)
+关于 LazyScrollView 的基本使用方法可以参考：[iOS 高性能异构滚动视图构建方案——LazyScrollView](http://pingguohe.net/2017/03/02/lazyScrollView-demo.html)
 
 目前 LazyScrollView 也已经开源：https://github.com/alibaba/LazyScrollView
 
