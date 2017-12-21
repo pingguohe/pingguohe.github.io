@@ -2,7 +2,7 @@
 
 layout: post
 title: Android事件传递小结
-author: 赵林
+author: zhaolin1230
 
 --- 
 
