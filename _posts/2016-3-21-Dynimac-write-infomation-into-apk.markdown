@@ -2,7 +2,7 @@
 
 layout: post
 title: 一种动态为apk写入信息的方案
-author: 赵林
+author: zhaolin1230
 
 --- 
 
