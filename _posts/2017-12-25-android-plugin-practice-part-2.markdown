@@ -105,7 +105,7 @@ protected Class<?> loadClass(String className, boolean resolve) throws ClassNotF
 
 从代码中可以看到loadClass会先从BootClassLoader中查找，如果没有找到再从parent的ClassLoader中查找，如果还没有再从当前的ClassLoader中查找。过程如下图所示
 
-![](/images/20171225214227.png)
+![](/images/2017/12/20171225214227.png)
 
 我们再来看一下上面几个ClassLoader的依赖关系，从代码中可以看到PathClassLoader的parent是BootClassLoader，下面通过一段代码来验证一下。
 
@@ -188,7 +188,7 @@ parent's parentClassLoader: java.lang.BootClassLoader@4546fd3
 
 从这里可以看到，已经成功的将DexClassLoader插到了PathClassLoader和BootClassLoader之间。再通过上一篇文章中介绍的[启动没有在AndroidManifest.xml注册的activity的方法](http://pingguohe.net/2017/12/25/android-plugin-practice-part-1.html)，就可以加载一个外部apk的activity。
 
-![](/images/20171225214310.png)
+![](/images/2017/12/20171225214310.png)
 
 
 ## 小结
