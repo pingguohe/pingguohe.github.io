@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  猫客页面内组件的动态化方案-Tangram 2.0
+title:  VirtualView Android实现详解（一）
 author: Longerian
 
 ---
