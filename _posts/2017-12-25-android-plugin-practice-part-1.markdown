@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: Android插件化实践(1)
+title: Android插件化实践(1)--动态代理
 author: zhaolin1230
 
 ---
