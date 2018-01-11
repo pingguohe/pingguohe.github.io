@@ -85,11 +85,12 @@ public Class<?> findClass(String name, ClassLoader definingContext, List<Throwab
 ```
 
 以上findClass的过程可以看下图
-![](/images/2018/1/20180111_2.png)
+
+<img src="/images/2018/1/20180111_2.png" width=400>
 
 最后一步中可以看到会遍历Element数组，里面存储着ClassLoader中的dexFile，而且是顺序遍历的。如果在类查找的过程中有机会把patch修复的类插到最前面，这样就可以在执行方法的时候替换掉有bug的类，完成热修复。
 
-![](/images/2018/1/20180111_3.png)
+<img src="/images/2018/1/20180111_3.png" width=400>
 
 ## 实现
 
