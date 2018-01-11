@@ -17,7 +17,7 @@ author: zhaolin1230
 首先回顾一下父委托机制，在Java中查找类的过程是从父ClassLoader向子ClassLoader进行的，具体参考[Android插件化实践(2)](http://pingguohe.net/2017/12/25/android-plugin-practice-part-2.html)，过程如下
 
 
-<img src="/image/2018/1/20180111_1.png" width="150">
+<img src="/images/2018/1/20180111_1.png" width="150">
 
 那么在某个ClassLoader内部是如何实现findClass的呢？看源码，首先看BaseDexClassLoader(源码位置libcore/dalvik/src/main/java/dalvik/system/)，它是PathClassLoader的父类，在构造方法中可以看到生成了一个DexPathList的实例，同样传入了dexPath。
 
@@ -85,11 +85,11 @@ public Class<?> findClass(String name, ClassLoader definingContext, List<Throwab
 ```
 
 以上findClass的过程可以看下图
-![](/image/2018/1/20180111_2.png)
+![](/images/2018/1/20180111_2.png)
 
 最后一步中可以看到会遍历Element数组，里面存储着ClassLoader中的dexFile，而且是顺序遍历的。如果在类查找的过程中有机会把patch修复的类插到最前面，这样就可以在执行方法的时候替换掉有bug的类，完成热修复。
 
-![](/image/2018/1/20180111_3.png)
+![](/images/2018/1/20180111_3.png)
 
 ## 实现
 
