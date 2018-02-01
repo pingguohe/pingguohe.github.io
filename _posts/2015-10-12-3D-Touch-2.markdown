@@ -2,7 +2,7 @@
 
 layout: post
 title: 浅谈3D Touch（2） -- UITouch && Peek && Pop
-author: 尛破孩-波波
+author: wuhanbo555
 
 --- 
 
@@ -182,3 +182,4 @@ _label.text = @"Peek && Pop";
 当然我们在PopViewController还需要给他加个dismiss的方法，让他可以回去
 
 好了，官方说的所有3D Touch的功能都介绍好了，这是我的[Demo](https://github.com/wuhanbo555/3D-Touch-Demo.git)
+
