@@ -8,6 +8,8 @@ author: Longerian
 
 很久很久以前，我分享过一篇文章，介绍了团队推出的一种异构的自定义 `LayoutManger` 的实现，它是基于 `LinearLayoutManager` 扩展实现的，这个项目的名字叫 vlayout，也许你以前听说过，或者在 [github](https://github.com/alibaba/vlayout) 上看到过，虽然还存在不少 bug 和不足，但能得到不少同学的支持，真是感到欣慰。
 
+![](https://camo.githubusercontent.com/2b947a15f5502af5a4639a5927d68052ccfb54a3/687474703a2f2f696d67332e746263646e2e636e2f4c312f3436312f312f31623962666234323030393034376637356365653038616537343135303564653263373461633061)
+
 关于它的设计思路，其实在文章[《Tangram 的基础 —— vlayout》](http://pingguohe.net/2017/02/28/vlayout-design.html)里已经有过一些介绍，还有一些关于它的使用、功能介绍：[vlayout使用说明（一）](http://pingguohe.net/2017/03/03/vlayout-guide-1.html)、[vlayout使用说明（二）](http://pingguohe.net/2017/03/03/vlayout-guide-2.html)。其实它很多细节可以展开介绍，其中可能涉及到 `RecyclerView` 自身的源码解读之类的。这里我想分享 vlayout 里其中一种 `LayoutHelper` （`LayoutHelper` 负责具体的布局逻辑，是 vlayout 里抽象出的一个层次，可以参考前文链接详细了解）的设计与实现。
 
 说到这里，这篇文章的标题其实应该叫做：vlayout 里一种自定义 `LayoutHelper` 的设计与实现，考虑到可能有读者不明白，所以用『自定义 LayoutManager 的一种设计与实现』代替了一下。
@@ -86,7 +88,7 @@ vlayout 虽然提供了异构布局的能力，但是我也承认，目前是接
 + [Virtualview-Android](https://github.com/alibaba/Virtualview-Android)
 + [天猫客户端组件动态化的方案——VirtualView 上手体验](https://juejin.im/post/5a54a44a6fb9a01cc1223399)
 
-有了这两件利器，当下一次 PD 跑过来问你线上 XXX 能不能调整一下样式结构的时候，你就可以回答说『可以』，而不是等到下一次发版。
+有了这两件利器，当下一次 PD 跑过来问你线上 XXX 能不能调整一下样式结构的时候，你就可以回答说『可以』，而不是等到下一次发版。而且我们的重点功能、日常迭代，也主要是围绕 Tangram + VirtualView 来进行，这样可以更快用上最新特性。
 
 ### 更多关于 `RecyclerView` 的资料
 最后，想说一点的是，整个 `RecyclerView` 体系的设计虽然非常强大、扩展性更好，但对于使用方来说，想要扩展一个自定义的 `LayoutManager` 还是比较麻烦的，这要求开发者深入理解 `RecyclerView` 体系的设计及原理，这里收集了部分之前阅读过的资料，对于大家深入理解 `RecyclerView` 或者 vlayout 都有好处：
