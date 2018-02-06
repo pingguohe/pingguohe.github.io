@@ -12,7 +12,7 @@ author: Longerian
 
 关于它的设计思路，其实在文章[《Tangram 的基础 —— vlayout》](http://pingguohe.net/2017/02/28/vlayout-design.html)里已经有过一些介绍，还有一些关于它的使用、功能介绍：[vlayout使用说明（一）](http://pingguohe.net/2017/03/03/vlayout-guide-1.html)、[vlayout使用说明（二）](http://pingguohe.net/2017/03/03/vlayout-guide-2.html)。其实它很多细节可以展开介绍，其中可能涉及到 `RecyclerView` 自身的源码解读之类的。这里我想分享 vlayout 里其中一种 `LayoutHelper` （`LayoutHelper` 负责具体的布局逻辑，是 vlayout 里抽象出的一个层次，可以参考前文链接详细了解）的设计与实现。
 
-说到这里，这篇文章的标题其实应该叫做：vlayout 里一种自定义 `LayoutHelper` 的设计与实现，考虑到可能有读者不明白，所以用『自定义 LayoutManager 的一种设计与实现』代替了一下。
+说到这里，这篇文章的标题其实应该叫做：vlayout 里一种自定义 LayoutHelper 的设计与实现，考虑到可能有读者不明白，所以用『自定义 LayoutManager 的一种设计与实现』代替了一下。
 
 好，下面开始进入主题。
 
