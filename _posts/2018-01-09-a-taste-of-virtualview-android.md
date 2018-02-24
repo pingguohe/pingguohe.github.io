@@ -52,7 +52,7 @@ author: Longerian
 ![](https://github.com/alibaba/VirtualView-iOS/raw/master/README/feature.png)
 
 1. 首先编写模板，可以通过我们提供的第一版工具 [virtualview_tools](https://github.com/alibaba/virtualview_tools/blob/master/README-ch.md) 编写，像上图中 `FrameLayout`、`NImage`、`NText` 都是内置的控件，设置好各种属性，可以写死也可以通过表达式绑定一个数据字段引用。
-2. 编译模板，上文提到的引擎加载 XML 并不是直接加载原始 XML 文件，而是先通过 [virtualview_tools](https://github.com/alibaba/virtualview_tools/blob/master/README-ch.md) 编译成一段二进制数据，后缀为 out。
+2. 编译模板，上文提到的引擎加载 XML 并不是直接加载原始 XML 文件，而是先通过 [virtualview_tools](https://github.com/alibaba/virtualview_tools/blob/master/README-ch.md) 编译成一段二进制数据，后缀为 `.out`。
 3. 下发到客户端，前两个步骤都是在客户端运行时之外进行的，这里的下发到客户端有两种含义，一种是直接将编译结果打包到客户端里加载，另一种是发布到 cdn 上，让客户端去下载。
 4. 渲染，方案引擎会加载这份二进制数据，并绑定数据渲染出来。
 
