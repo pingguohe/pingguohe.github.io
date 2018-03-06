@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  VirtualView Android实现详解（二）
+title:  VirtualView Android 实现详解（二）
 author: Longerian
 
 ---
