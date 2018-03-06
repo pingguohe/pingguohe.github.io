@@ -24,6 +24,8 @@ author: Longerian
 
 ### 名词解释
 
++ VirtualView：如果还不清楚，可以阅读[《天猫客户端组件动态化的方案——VirtualView 上手体验》](http://pingguohe.net/2018/01/09/a-taste-of-virtualview-android.html)大概了解下；
+
 + 原生控件：就是通过封装了系统原生 View 来实现的控件；
 
 + 虚拟化控件：使用 canvas 绘制创建的控件，它需要依托一个原生容器控件作为宿主容器，承重其最终的展示；
@@ -49,6 +51,11 @@ author: Longerian
 ![](https://gw.alicdn.com/tfs/TB1fT0bckyWBuNjy0FpXXassXXa-963-600.jpg)
 
 当这样一个 VirtualView 挂载到系统布局容器里的时候，系统就要对他进行测量、布局、绘制三个阶段，才能显示出来。而这三个阶段触发的入口便是宿主容器的 `onMeasure`，`onLayout`，`onDraw` 三个阶段。对于从 XML 里加载出来的整个组件来说，会构造一棵 ViewBase 树挂载到宿主容器里，在宿主容器的 `onMeasure`，`onLayout`，`onDraw` 三个阶段里调用 ViewBase 树根节点的 `onComMeasure`，`onComLayout`，`onComDraw `，然后再进一步递归调用子节点的这些方法，就配合系统显示流程完成了对应的逻辑。虚拟化控件的尺寸计算协议与 Android 系统的协议一致。对于原生控件来说，`IView` 的实现就是调用 `View` 的对应方法，而对于虚拟化控件来说，`onComMeasure` 过程与实现自定义 `View` 一样完成计算逻辑，而 `onComLayout` 过程需要根据计算结果控制子节点的布局位置或者绘制位置，而 `onComDraw ` 阶段就是操作 canvas 对象，偏移一定位置，然后开始绘制。
+
+### 实例
+![](https://user-gold-cdn.xitu.io/2018/3/6/161fb065b6a0b994?w=1440&h=380&f=png&s=197023)
+
+上图实例中，图标都是原生控件，而标题都是虚拟控件。
 
 ### 一个不足之处
 
