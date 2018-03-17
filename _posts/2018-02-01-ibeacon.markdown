@@ -1,0 +1,115 @@
+---
+
+layout: post
+title: iOS端近场围栏检测（一） ——iBeacon
+author: wuhanbo555
+
+--- 
+
+![img](https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4106153719,3205461314&fm=27&gp=0.jpg)
+### 前言
+自iOS7开始，苹果加入了beacon的围栏检测API。以苹果固有的尿性--喜欢在所有的设备之前添加字母“i”,所以命名为“iBeacon”。其对应的Region类型为：CLBeaconRegion，之前有做过地理围栏的同学肯定一眼就知道，这是基于CLRegion的继承类。废话不多说，那我直接给干货吧。
+
+### 正文
+在开始之前我们先理解两种监听方式：
+Monitoring：低功耗监听，用来判断设备进出ibeacon围栏，支持后台或app进程杀掉后监听。
+Ranging：大功率监听，监听当前设备所在区域内的ibeacon信息，包括rssi，距离，不支持后台监听。
+基于这两个特性，我们在使用时就分为前台和后台两个场景来实现ibeacon的检测。
+#### 创建CLBeaconRegion
+创建一个CLBeaconRegion我们需要准备好几个~~入参~~:
+
+|参数|必要字段|一般作用|
+|---|---|---|
+|identifier|是|标识字符串|
+|proximityUUID|是|一级标识（eg.标识公司）|
+|major|否|二级标识（eg.标识店铺）|
+|minor|否|三级标识（eg.标识位置）|
+
+这边我就用一个最简单的只有一级标识的region监听。
+
+```
+NSUUID * uuid = [[NSUUID alloc] initWithUUIDString:@"999557e7-23e4-4bed-988a-a02fe47f9888"];
+CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUuid
+                                           identifier:@"ali.taobao.beacon"];
+region.notifyOnEntry = YES;  
+region.notifyOnExit = YES;                                         
+```                              
+#### 权限检查
+这里说到的权限包括两个部分：蓝牙权限，定位权限。只有两个权限都为可用状态，ibeacon的监听才算真正开启。
+
+**蓝牙权限检查**
+
++ 初始化CBCentralManager
+
+```
+NSDictionary * options = @{CBCentralManagerOptionShowPowerAlertKey:@NO};
+
+self.bleManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:options];
+```
+
++ 在回调中监听蓝牙权限的变更状态
+
+```
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central
+```
+回调方法中```central.state == CBManagerStatePoweredOn```则表明蓝牙是开启状态。
+
+**定位权限检查**
+
++ 初始化CLLocationManager
+
+```
+self.locationManager = [[CLLocationManager alloc] init];
+self.locationManager.delegate = self;
+self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+self.locationManager.distanceFilter = kCLDistanceFilterNone;
+```
+
++ 在回调中监听定位权限的变更状态
+
+```
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+```
+
+回调方法中```status == kCLAuthorizationStatusAuthorizedAlways|| status == kCLAuthorizationStatusAuthorizedWhenInUse```则表明定位权限开启。
+                                           
+#### 前台监听
++ 前台监听可以使用Monitoring方法，也可以使用Ranging方法。本文中由于下文会具体介绍Monitoring方法，故前台选用Ranging方法监听。
++ 开始监听：```[self.locationManager startRangingBeaconsInRegion:region];```
++ 监听回调：```- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region``` 此方法中回调了所有发现到的beacon设备，我们通过返回的beacons字段，可以拿到发现的所有beacon的以下字段：
+
+    |参数|解释|
+    |---|---|
+    |proximityUUID|一级标识|
+    |major|二级标识|
+    |minor|三级标识|
+    |proximity|设备的信标|
+    |accuracy|手机与此beacon的大概的距离|
+    |rssi|信号强弱|
++ 关闭监听：```[self.locationManager stopRangingBeaconsInRegion:region];```   
+ 
+#### 后台监听
++ 使用Monitoring方式监听，可以在app处于后台或者完全被杀掉时，检测设备进出region的变化。
++ 开始监听：```[self.locationManager startMonitoringForRegion:region];```
++ app进程存活时监听回调：
+
+    ```
+    - (void)locationManager:(CLLocationManager *)manager didDetermineState:         (CLRegionState)state forRegion:(CLRegion *)region
+    - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+    - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+    ```
+以上的三个回调我们可以选择第一个单独使用，也可以二、三两个联合使用。
+需要注意的是，后两个回调依赖于region的两条属性：
+
+    ```
+    region.notifyOnEntry = YES;  
+    region.notifyOnExit = YES;  
+    ```
+
+    而想在手机黑屏状态检测，则依赖于另一个属性```region.notifyEntryStateOnDisplay == NO```,这个属性官方的解释不是非常清楚，所以我在这边特殊说明一下：当默认或设为NO时，手机在黑屏状态依旧会检测region，而设为YES时，只有亮屏状态才会检测。
+
++ app进程被杀时监听回调：监听app完全被杀死后，进入指定围栏时系统会将app在后台开启，除了UIViewController的一些生命周期方法不被调用之外，与正常前台启动无异！但是需要注意的是，后台启动app是有时间限制的，在这段时间内，如果用户未能主动启动app，app进程又将被系统杀死。而这段时间的长度一些资料上说的是10s，但是经过我的具体测试，应该更长一些。利用这一段时间，我们可以重新建立beacon的监听，获取当前检测到的beacon的信息记录到本地。也可以利用这段时间在本地做一次推送，提示用户正常打开app。
+
+### 结论
++ iBeacon无疑是iPhone上近场检测的最佳手段，不但系统API支持的非常丰富，而且市场上的Beacon设备也具有价格低、体积小、耗电少、便于布置的特性！在当代的商场、公交站台等公共场所早已遍地开花。我们可以用其推送广告、收集位置等等能想到和想不到的用途~~。
+

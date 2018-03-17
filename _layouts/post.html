@@ -1,6 +1,8 @@
 ---
 layout: default
 ---
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <div class="post">
 
   <header class="post-header">
@@ -13,15 +15,17 @@ layout: default
   </article>
 
 </div>
-<div class="ds-thread" data-thread-key="{{ page.id }}" data-title="{{ page.title }}" data-url="{{ page.url }}"></div>
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:"pingguohe"};
-(function() {
- var ds = document.createElement('script');
- ds.type = 'text/javascript';ds.async = true;
- ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
- ds.charset = 'UTF-8';
- (document.getElementsByTagName('head')[0] 
-  || document.getElementsByTagName('body')[0]).appendChild(ds);
- })();
+<div id="container"></div>
+<script>
+var gitment = new Gitment({
+    id: '{{ page.id }}', // 可选。默认为 location.href
+    owner: '{{ page.author }}',
+    repo: 'pingguohe-comment',
+    oauth: {
+        client_id: '04ade5203856e146dc64',
+        client_secret: '303b8547f18091e458ee903c22b2031e36b15392',
+    },
+})
+gitment.render('container')
 </script>
+

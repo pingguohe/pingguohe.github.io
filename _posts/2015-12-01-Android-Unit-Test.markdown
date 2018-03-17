@@ -2,7 +2,7 @@
 
 layout: post
 title: Android单元测试初探
-author: 赵林
+author: zhaolin1230
 
 --- 
 
