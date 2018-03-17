@@ -1,13 +1,13 @@
 ---
 
 layout: post
-title:  VirtualView Android 实现详解（二）
+title:  VirtualView Android 实现详解（二）—— 虚拟控件的设计与实现
 author: Longerian
 
 ---
 
 ### 本系列文章
-+ [《VirtualView Android实现详解（一）》](http://pingguohe.net/2017/12/27/deep-into-virtualview-android-1.html)
++ [《VirtualView Android实现详解（一）—— 文件格式与模板编译》](http://pingguohe.net/2017/12/27/deep-into-virtualview-android-1.html)
 
 本文介绍 VirtualView 方案里虚拟化控件的原理，包括尺寸计算与布局的实现，以及它与原生控件组合使用时的逻辑交互。
 
