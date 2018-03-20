@@ -25,9 +25,7 @@ author: Longerian
 ### 名词解释
 
 + VirtualView：如果还不清楚，可以阅读[《天猫客户端组件动态化的方案——VirtualView 上手体验》](http://pingguohe.net/2018/01/09/a-taste-of-virtualview-android.html)大概了解下；
-
 + 原生控件：就是通过封装了系统原生 View 来实现的控件；
-
 + 虚拟化控件：使用 canvas 绘制创建的控件，它需要依托一个原生容器控件作为宿主容器，承重其最终的展示；
 
 ### 控件体系与接口设计
