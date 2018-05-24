@@ -150,6 +150,7 @@ curl  http://localhost:8001/api/tac/execute/helloworld -s|json
 ## 相关链接
 
 + [苹果核](http://tangram.pingguohe.net/)
++ [在 TAC 上使用 Tangram4TAC SDK](http://pingguohe.net/2018/05/24/tangram-for-tac.html)
 + [TAC](https://github.com/alibaba/tac)
 + [Tangram-Android](https://github.com/alibaba/tangram-android)
 + [Tangram-iOS](https://github.com/alibaba/tangram-ios)
