@@ -11,11 +11,11 @@ Tangram 客户端 SDK 对后端数据格式有标准化的需求，而后端接�
 
 ## SDK 介绍
 
-![](https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/jpeg/95701d8d-61fb-44ae-bbbe-70dda875ead5.jpeg)
+![](https://user-gold-cdn.xitu.io/2018/5/24/163912175134d274?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 一期 SDK 非常简单，尽量精简抽象，主要提供了 Tangram 组件模型的定义和默认的数据转换输出服务（称之为 render）。如上图所示，橘色部分为 SDK 提供的核心模型对象，Cell 是组件定义，Container 是容器定义，Style 是样式定义。浅绿色部分为 Tangram 内置的布局类型组件定义。白色部分为业务自定义组件，不集成在 SDK 内部，用户可以自己扩展任意部分来实现自己的组件 model 对象。
 
-![](https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/jpeg/db9d3cda-73dc-4a2d-9ff2-5a76a278c4a6.jpeg)
+![](https://user-gold-cdn.xitu.io/2018/5/24/1639121a70fb868d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 Cell、Container、Style 的属性定义也是按照现有 Tangram 的规范来定义，业务字段需要用户自己继承对应的类来扩展。
 
@@ -178,7 +178,7 @@ resultList.add(result);
 ```
 
 上述流程总结起来如图：
-![](https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/png/9ea7a752-e8b5-4c4c-bce1-6edbbb478480.png)
+![](https://user-gold-cdn.xitu.io/2018/5/24/1639121ca5693b5e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 
 
